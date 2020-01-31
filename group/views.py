@@ -8,8 +8,7 @@ from group.models import User
 
 
 def __get_datetime_from_pyre(user: PyreResponse, key: str) -> datetime:
-    timestamp = round(user.val()[key] / 1000)  # type: int
-    return firebase_utils.get_datetime_from_timestamp(timestamp)
+    return firebase_utils.get_datetime_from_timestamp(user.val()[key])
 
 
 def refresh_groups(request) -> HttpResponse:
@@ -17,7 +16,7 @@ def refresh_groups(request) -> HttpResponse:
     all_users = db.child("group_storywell_setting").get()
 
     for user in all_users.each():
-        app_start_date:datetime = __get_datetime_from_pyre(user, "appStartDate")
+        app_start_date: datetime = __get_datetime_from_pyre(user, "appStartDate")
         logging_user = User(
             user_id=user.key(),
             app_start_date=app_start_date,
