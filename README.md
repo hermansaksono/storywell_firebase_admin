@@ -1,6 +1,6 @@
 # User Logging Processor
 
-### Setup Python's virtual environment for Storytelling
+### Setup Python's virtual environment
 ```bash
 python3 -m venv venv
 source venv/bin/activate
