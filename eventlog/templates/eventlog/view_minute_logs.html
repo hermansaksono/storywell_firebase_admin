@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Logs</title>
+</head>
+<body>
+<h2>Event: {{ event_name }}</h2>
+<table border="1">
+    {% if dates %}
+        <tr>
+            <th>Username</th>
+        {% for date in dates %}
+            <th>{{ date }}</th>
+        {% endfor %}
+        </tr>
+    {% endif %}
+
+    {% if log_data %}
+        {% for user_log in log_data %}
+            <tr>
+                <td>{{ user_log.user_id }}</td>
+                {% for log in user_log.logs %}
+                    {%  if log != 0 %}
+                    <td>{{ log }}</td>
+                    {%  else %}
+                    <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+</table>
+</body>
+</html>
