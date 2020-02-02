@@ -189,3 +189,43 @@ def __refresh_log_by_date(user: User, date_string: str) -> bool:
         return True
 
 
+def view_moods(request, user_id: str, start_date_str: str, end_date_str:str):
+    try:
+        user: User = User.objects.get(user_id=user_id)
+    except User.DoesNotExist:
+        return HttpResponse("User not found")
+
+    db = firebase_db.get()
+    raw_daily_logs: Query = db.child("user_logging")\
+        .child(user.user_id)\
+        .start_at(start_date_str)\
+        .end_at(end_date_str)
+
+    daily_logs = dict()
+    for log in raw_daily_logs.each():
+        date: str = log.key()
+        timestamp_logs = list()
+
+        for event in log.each():
+            event_dict = event.val()
+            timestamp_logs.append({
+                "event": event_dict['event'],
+                "timestamp": event_dict['timestamp'],
+                "time": helpers.get_friendly_time_from_timestamp(event_dict['timestamp']),
+                "text": helpers.get_event_info(event_dict)
+            })
+
+        daily_logs[date] = {
+            "date": helpers.get_friendly_date_from_str(date),
+            "minute_logs": timestamp_logs
+        }
+
+    template = loader.get_template('eventlog/view_minute_logs.html')
+    context = {
+        'user_id': user_id,
+        'start_date': helpers.get_friendly_date_from_str(start_date_str),
+        'end_date': helpers.get_friendly_date_from_str(end_date_str),
+        'log_data': daily_logs
+    }
+
+    return HttpResponse(template.render(context, request))

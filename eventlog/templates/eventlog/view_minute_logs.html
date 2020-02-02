@@ -5,33 +5,25 @@
     <title>View Logs</title>
 </head>
 <body>
-<h2>Event: {{ event_name }}</h2>
-<table border="1">
-    {% if dates %}
-        <tr>
-            <th>Username</th>
-        {% for date in dates %}
-            <th>{{ date }}</th>
-        {% endfor %}
-        </tr>
-    {% endif %}
-
-    {% if log_data %}
-        {% for user_log in log_data %}
+<h1>Event logs for {{ user_id}}</h1>
+<h2>{{ start_date }} - {{ end_date}}</h2>
+<hr />
+{% if log_data %}
+    {% for log_day in log_data %}
+    <h3>{{ date }}</h3>
+        {% if log_day.minute_logs %}}
+        <table border="1">
+            {% for minute_log in log_day.minute_logs %}
             <tr>
-                <td>{{ user_log.user_id }}</td>
-                {% for log in user_log.logs %}
-                    {%  if log != 0 %}
-                    <td>{{ log }}</td>
-                    {%  else %}
-                    <td></td>
-                    {% endif %}
-                {% endfor %}
+                <td>{{ event }}</td>
+                <td>{{ time }}</td>
+                <td>{{ text }}</td>
             </tr>
-        {% endfor %}
-    {% else %}
-        <p>No polls are available.</p>
-    {% endif %}
+            {% endfor %}
+        </table>
+        {% endif %}}
+    {% endfor %}
+{% endif %}
 </table>
 </body>
 </html>

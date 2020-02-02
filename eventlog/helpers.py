@@ -132,3 +132,30 @@ def get_end_datetime(end_date_str: str):
         return TZ_TIMEZONE.localize(datetime.now())
     else:
         return firebase_utils.get_datetime_from_str(end_date_str)
+
+
+def get_friendly_date_from_str(date_str: str) -> str:
+    friendly_datetime: datetime = firebase_utils.get_datetime_from_str(date_str)
+    return firebase_utils.get_pretty_date_str(friendly_datetime)
+
+
+def get_friendly_time_from_timestamp(timestamp_millis: int) -> str:
+    friendly_datetime: datetime = firebase_utils.get_datetime_from_timestamp(timestamp_millis)
+    return firebase_utils.get_pretty_time_str(friendly_datetime)
+
+
+def get_event_info(event: dict) -> str:
+    event_name: str = event['eventName']
+    event_params: dict = event['eventParams']
+
+    if event_name == "READ_STORY":
+        return "Reading storybook: " + event_params['STORY_ID']
+    elif event_name == "REFLECTION_ANSWERING_START":
+        return "Answering a question"
+    elif event_name == "CHALLENGE_PICKED":
+        return "Challenge picked"
+    elif event_name == "GEOSTORY_SUBMITTED":
+        return "Adult shared a story"
+    elif event_name == "EMOTION_LOGGED":
+        emotion_str: str = event_params['list_of_emotions'].join(", ")
+        return "Emotion: " + event_params['role'] + " feeling + " + emotion_str + ". "
