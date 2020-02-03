@@ -9,19 +9,19 @@
 <h2>{{ start_date }} - {{ end_date}}</h2>
 <hr />
 {% if log_data %}
-    {% for log_day in log_data %}
-    <h3>{{ date }}</h3>
-        {% if log_day.minute_logs %}}
-        <table border="1">
-            {% for minute_log in log_day.minute_logs %}
+    {% for day_key, day_values in log_data.items %}
+    <h3>{{ day_values.date }}</h3>
+        {% if day_values.minute_logs %}
+        <table border="1" cellspacing="0" bordercolor="#555555">
+            {% for min_values in day_values.minute_logs %}
             <tr>
-                <td>{{ event }}</td>
-                <td>{{ time }}</td>
-                <td>{{ text }}</td>
+                <td>{{ min_values.event }}</td>
+                <td>{{ min_values.time }}</td>
+                <td>{{ min_values.text }}</td>
             </tr>
             {% endfor %}
         </table>
-        {% endif %}}
+        {% endif %}
     {% endfor %}
 {% endif %}
 </table>

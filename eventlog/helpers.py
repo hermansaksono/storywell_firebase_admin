@@ -12,7 +12,7 @@ from pyrebase.pyrebase import PyreResponse
 
 NOW_STR: str = "NOW"
 ONE_DAY_TIMEDELTA: timedelta = timedelta(days=1)
-TZ_TIMEZONE = pytz.timezone("America/New York")
+TZ_TIMEZONE = pytz.timezone("America/New_York")
 
 
 def get_multi_dict(K, type):
@@ -145,17 +145,22 @@ def get_friendly_time_from_timestamp(timestamp_millis: int) -> str:
 
 
 def get_event_info(event: dict) -> str:
-    event_name: str = event['eventName']
-    event_params: dict = event['eventParams']
+    if 'eventParams' in event:
+        event_name: str = event['eventName']
+        event_params: dict = event['eventParams']
 
-    if event_name == "READ_STORY":
-        return "Reading storybook: " + event_params['STORY_ID']
-    elif event_name == "REFLECTION_ANSWERING_START":
-        return "Answering a question"
-    elif event_name == "CHALLENGE_PICKED":
-        return "Challenge picked"
-    elif event_name == "GEOSTORY_SUBMITTED":
-        return "Adult shared a story"
-    elif event_name == "EMOTION_LOGGED":
-        emotion_str: str = event_params['list_of_emotions'].join(", ")
-        return "Emotion: " + event_params['role'] + " feeling + " + emotion_str + ". "
+        if event_name == "READ_STORY":
+            return "Reading storybook: " + event_params['STORY_ID']
+        elif event_name == "REFLECTION_ANSWERING_START":
+            return "Answering a question."
+        elif event_name == "CHALLENGE_PICKED":
+            return "Challenge picked."
+        elif event_name == "PLAY_BUTTON_CLICK":
+            return "Initiating synchronization."
+        elif event_name == "GEOSTORY_SUBMITTED":
+            return "Adult shared a story."
+        elif event_name == "EMOTION_LOGGED":
+            emotion_str: str = event_params['list_of_emotions'].join(", ")
+            return "Emotion: " + event_params['role'] + " feeling + " + emotion_str + ". "
+    else:
+        return " "
