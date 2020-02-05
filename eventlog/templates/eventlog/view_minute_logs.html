@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>View Logs</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "global.css" %}" type="text/css" media="screen" />
 </head>
 <body>
-<h1>Event logs for {{ user_id}}</h1>
+<h1>{{ user_id}}'s Moments</h1>
 <h2>{{ start_date }} - {{ end_date}}</h2>
 <hr />
 {% if log_data %}
@@ -16,7 +18,7 @@
             {% for minute_log in log_day.minute_logs %}
             <tr>
                 <td>{{ event }}</td>
-                <td>{{ time }}</td>
+                <td><b>{{ time }}</b>b></td>
                 <td>{{ text }}</td>
             </tr>
             {% endfor %}
