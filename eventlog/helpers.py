@@ -152,10 +152,22 @@ def get_event_info(event: dict) -> str:
         return "Reading storybook: " + event_params['STORY_ID']
     elif event_name == "REFLECTION_ANSWERING_START":
         return "Answering a question"
+    elif event_name == "REFLECTION_PLAYBACK_START":
+        return "Replaying the recorded answer"
     elif event_name == "CHALLENGE_PICKED":
-        return "Challenge picked"
+        return "Picked a fitness challenge"
     elif event_name == "GEOSTORY_SUBMITTED":
         return "Adult shared a story"
+    elif event_name == "GEOSTORY_VIEWED":
+        return "Listened to a community story"
     elif event_name == "EMOTION_LOGGED":
         emotion_str: str = event_params['list_of_emotions'].join(", ")
-        return "Emotion: " + event_params['role'] + " feeling + " + emotion_str + ". "
+        return "Emotion: " + event_params['role'] + " felt + " + emotion_str + ". "
+    elif event_name == "APP_STARTUP":
+        return "Starting the app"
+
+
+def get_filtered_logs(unfiltered_logs: dict, event_names: list) -> list:
+    return [filter(lambda log:
+                   log.val()['event'] in event_names,
+                   unfiltered_logs)]
