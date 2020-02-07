@@ -13,6 +13,9 @@ urlpatterns = [
     path('compare/<str:user_id>/<str:event1>/<str:event2>/<str:start_date>/<str:end_date>/weekly/<int:num_months>',
          views.compare_logs, name='compare_logs'),
 
+    # ex: /emotions/<user_id>/<start_date_str>/<end_date_str>/
+    path('emotions/<str:user_id>/<str:start_date_str>/<str:end_date_str>', views.view_moods, name='view_moods'),
+
     # ex: /refresh/<user_id>/<date_string>
     path('refresh/<str:user_id>/', views.refresh_logs, name='refresh_logs'),
     # ex: /refresh/<user_id>/until/<date_string>

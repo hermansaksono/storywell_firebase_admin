@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import pytz as pytz
 from gcloud.datastore import Query
 
+from eventlog import values
 from eventlog.models import Log
 from firebase import firebase_db, firebase_utils
 from group.models import User
@@ -12,7 +13,7 @@ from pyrebase.pyrebase import PyreResponse
 
 NOW_STR: str = "NOW"
 ONE_DAY_TIMEDELTA: timedelta = timedelta(days=1)
-TZ_TIMEZONE = pytz.timezone("America/New York")
+TZ_TIMEZONE = pytz.timezone("America/New_York")
 
 
 def get_multi_dict(K, type):
@@ -146,10 +147,12 @@ def get_friendly_time_from_timestamp(timestamp_millis: int) -> str:
 
 def get_event_info(event: dict) -> str:
     event_name: str = event['eventName']
-    event_params: dict = event['eventParams']
+    if 'eventParams' in event :
+        event_params: dict = event['eventParams']
 
     if event_name == "READ_STORY":
-        return "Reading storybook: " + event_params['STORY_ID']
+        story_id: str = event_params['STORY_ID']
+        return "Reading storybook: " + values.stories[story_id]
     elif event_name == "REFLECTION_ANSWERING_START":
         return "Answering a question"
     elif event_name == "REFLECTION_PLAYBACK_START":
@@ -168,6 +171,6 @@ def get_event_info(event: dict) -> str:
 
 
 def get_filtered_logs(unfiltered_logs: dict, event_names: list) -> list:
-    return [filter(lambda log:
-                   log.val()['event'] in event_names,
-                   unfiltered_logs)]
+    return list(filter(lambda key:
+                       unfiltered_logs[key]['eventName'] in event_names,
+                   unfiltered_logs))

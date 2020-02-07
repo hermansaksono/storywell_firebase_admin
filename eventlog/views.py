@@ -6,17 +6,18 @@ from django.http import HttpResponse
 from django.template import loader
 from pyrebase.pyrebase import PyreResponse
 
-from eventlog import helpers
+from eventlog import helpers, values
 from eventlog.models import Log
 from firebase import firebase_db, firebase_utils
 from group.models import User
 
+
 NOW_STR: str = "NOW"
-TZ_TIMEZONE = pytz.timezone("America/New York")
+TZ_TIMEZONE = pytz.timezone("America/New_York")
 ALL_STR: str = "all"
 
 
-def view_logs(request, event:str, start_date: str, end_date:str, user_id: str = ALL_STR):
+def view_logs(request, event:str, start_date: str, end_date: str, user_id: str = ALL_STR):
     try:
         if user_id == ALL_STR:
             users = User.objects.all()
@@ -189,30 +190,30 @@ def __refresh_log_by_date(user: User, date_string: str) -> bool:
         return True
 
 
-def view_moods(request, user_id: str, start_date_str: str, end_date_str:str):
-    try:
-        user: User = User.objects.get(user_id=user_id)
-    except User.DoesNotExist:
-        return HttpResponse("User not found")
-
+def view_moods(request, user_id: str, start_date_str: str, end_date_str: str):
     db = firebase_db.get()
     raw_daily_logs: Query = db.child("user_logging")\
-        .child(user.user_id)\
+        .child(user_id)\
+        .order_by_key()\
         .start_at(start_date_str)\
-        .end_at(end_date_str)
+        .end_at(end_date_str)\
+        .get()
 
     daily_logs = dict()
+
     for log in raw_daily_logs.each():
         date: str = log.key()
+        raw_timestamp_logs: dict = log.val()
         timestamp_logs = list()
 
-        for event in log.each():
-            event_dict = event.val()
+        for timestamp_id in helpers.get_filtered_logs(raw_timestamp_logs, values.event_names):
+        # for timestamp_id in raw_timestamp_logs:
+            event: dict = raw_timestamp_logs[timestamp_id]
             timestamp_logs.append({
-                "event": event_dict['event'],
-                "timestamp": event_dict['timestamp'],
-                "time": helpers.get_friendly_time_from_timestamp(event_dict['timestamp']),
-                "text": helpers.get_event_info(event_dict)
+                "timestamp": int(timestamp_id),
+                "event": event['eventName'],
+                "time": helpers.get_friendly_time_from_timestamp(int(timestamp_id)),
+                "text": helpers.get_event_info(event)
             })
 
         daily_logs[date] = {
