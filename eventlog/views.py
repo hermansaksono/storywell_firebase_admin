@@ -191,7 +191,14 @@ def __refresh_log_by_date(user: User, date_string: str) -> bool:
 
 
 def view_moods(request, user_id: str, start_date_str: str, end_date_str: str):
+    try:
+        user: User = User.objects.get(user_id=user_id)
+    except User.DoesNotExist:
+        return HttpResponse("User not found")
+
     db = firebase_db.get()
+
+    # Retrieve daily logs in raw
     raw_daily_logs: Query = db.child("user_logging")\
         .child(user_id)\
         .order_by_key()\
@@ -199,25 +206,49 @@ def view_moods(request, user_id: str, start_date_str: str, end_date_str: str):
         .end_at(end_date_str)\
         .get()
 
+    # Retrieve group members' fitness data
+    member_by_role = dict()
+    member_fitness_data = dict()
+
+    for person in user.get_members():
+        member_by_role[person.role] = person
+
+        fitness_data: Query = db.child("person_daily_fitness") \
+            .child(person.person_id).order_by_key() \
+            .start_at(start_date_str) \
+            .end_at(end_date_str)\
+            .get()
+
+        daily_steps = dict()
+        for daily_steps_raw in fitness_data.each():
+            daily_steps[daily_steps_raw.key()] = daily_steps_raw.val()['steps']
+
+        member_fitness_data[person.role] = dict(daily_steps)
+
+    # Initialize the dict that will store the daily logs
     daily_logs = dict()
 
+    # Pre-processing the daily logs
     for log in raw_daily_logs.each():
-        date: str = log.key()
+        date_str: str = log.key()
         raw_timestamp_logs: dict = log.val()
         timestamp_logs = list()
 
+        # Retrieve logging data
         for timestamp_id in helpers.get_filtered_logs(raw_timestamp_logs, values.event_names):
-        # for timestamp_id in raw_timestamp_logs:
             event: dict = raw_timestamp_logs[timestamp_id]
+            time_str: str = helpers.get_friendly_time_from_timestamp(int(timestamp_id))
             timestamp_logs.append({
                 "timestamp": int(timestamp_id),
                 "event": event['eventName'],
-                "time": helpers.get_friendly_time_from_timestamp(int(timestamp_id)),
-                "text": helpers.get_event_info(event)
+                "time": time_str,
+                "text": helpers.get_event_info(event, member_by_role)
             })
 
-        daily_logs[date] = {
-            "date": helpers.get_friendly_date_from_str(date),
+        daily_logs[date_str] = {
+            "date": helpers.get_friendly_date_from_str(date_str),
+            "adult_steps": helpers.get_member_steps_on_day(member_fitness_data, "P", date_str),
+            "child_steps": helpers.get_member_steps_on_day(member_fitness_data, "C", date_str),
             "minute_logs": timestamp_logs
         }
 

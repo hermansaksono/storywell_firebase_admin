@@ -8,3 +8,17 @@ class User(models.Model):
 
     def __str__(self):
         return self.user_id
+
+
+    def get_members(self) -> list:
+        return list(Person.objects.filter(user=self))
+
+
+class Person(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    person_id = models.IntegerField()
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name

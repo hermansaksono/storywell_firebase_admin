@@ -1,3 +1,4 @@
+import json
 from collections import defaultdict
 from datetime import datetime, timedelta
 
@@ -7,7 +8,7 @@ from gcloud.datastore import Query
 from eventlog import values
 from eventlog.models import Log
 from firebase import firebase_db, firebase_utils
-from group.models import User
+from group.models import User, Person
 from pyrebase.pyrebase import PyreResponse
 
 
@@ -145,20 +146,35 @@ def get_friendly_time_from_timestamp(timestamp_millis: int) -> str:
     return firebase_utils.get_pretty_time_str(friendly_datetime)
 
 
-def get_event_info(event: dict) -> str:
+def get_event_info(event: dict, member_by_role: dict) -> str:
     event_name: str = event['eventName']
+    event_params: dict
     if 'eventParams' in event :
-        event_params: dict = event['eventParams']
+        event_params = event['eventParams']
 
     if event_name == "READ_STORY":
         story_id: str = event_params['STORY_ID']
-        return "Reading storybook: " + values.stories[story_id]
+        return "Reading storybook: " + values.stories[story_id] + "."
     elif event_name == "REFLECTION_ANSWERING_START":
         return "Answering a question"
     elif event_name == "REFLECTION_PLAYBACK_START":
         return "Replaying the recorded answer"
     elif event_name == "CHALLENGE_PICKED":
-        return "Picked a fitness challenge"
+        challenge_data = json.loads(event_params['CHALLENGE_JSON'])
+        person_adult: Person = member_by_role["P"]
+        person_child: Person = member_by_role["C"]
+        adult_goal = round(challenge_data['challenges_by_person'][str(person_adult.person_id)]["goal"])
+        child_goal = round(challenge_data['challenges_by_person'][str(person_child.person_id)]["goal"])
+        return "Picked a fitness challenge. Caregiver: {0} steps, child {1} steps.".format(adult_goal, child_goal)
+    elif event_name == "PLAY_PROGRESS_ANIMATION":
+        is_completed: bool = float(event_params['OVERALL_PROGRESS']) >= 1.0
+        if is_completed:
+            return "Family fitness challenge completed."
+        else:
+            return "Family did not complete the fitness challenge."
+    elif event_name == "STORY_UNLOCKED":
+        story_id: str = event_params['STORY_ID']
+        return "Unlocked a story chapter in: " + values.stories[story_id] + "."
     elif event_name == "GEOSTORY_SUBMITTED":
         return "Adult shared a story"
     elif event_name == "GEOSTORY_VIEWED":
@@ -174,3 +190,10 @@ def get_filtered_logs(unfiltered_logs: dict, event_names: list) -> list:
     return list(filter(lambda key:
                        unfiltered_logs[key]['eventName'] in event_names,
                    unfiltered_logs))
+
+
+def get_member_steps_on_day(member_fitness_data: dict, role: str, date_str: str) -> int:
+    if date_str in member_fitness_data[role]:
+        return member_fitness_data[role][date_str]
+    else:
+        return 0
