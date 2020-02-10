@@ -1,6 +1,7 @@
 import json
 from collections import defaultdict
 from datetime import datetime, timedelta
+from typing import Optional
 
 import pytz as pytz
 from gcloud.datastore import Query
@@ -155,7 +156,7 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
     if event_name == "READ_STORY":
         story_id: str = event_params['STORY_ID']
         return "Reading storybook: " + values.stories[story_id] + "."
-    elif event_name == "REFLECTION_ANSWERING_START":
+    elif event_name == "REFLECTION_RESPONDED":
         return "Answering a question"
     elif event_name == "REFLECTION_PLAYBACK_START":
         return "Replaying the recorded answer"
@@ -197,3 +198,35 @@ def get_member_steps_on_day(member_fitness_data: dict, role: str, date_str: str)
         return member_fitness_data[role][date_str]
     else:
         return 0
+
+
+def get_edit_uri(user: User, event: dict) -> Optional[str]:
+    event_name: str = event['eventName']
+    event_params: dict
+
+    if 'eventParams' in event :
+        event_params = event['eventParams']
+
+    if event_name == "REFLECTION_RESPONDED":
+        user_id: str = user.user_id
+        story_id: str = event_params["STORY_ID"]
+        page_id: str = str(event_params["PAGE_ID"])
+        return "/reflection/edit/{0}/{1}/{2}".format(user_id, story_id, page_id)
+    else:
+        return None
+
+
+def get_transcript(event: dict) -> Optional[str]:
+    event_name: str = event['eventName']
+    event_params: dict
+
+    if 'eventParams' in event :
+        event_params = event['eventParams']
+
+    if event_name == "REFLECTION_RESPONDED":
+        if "transcript" in event_params:
+            return event_params["transcript"]
+        else:
+            return ""
+    else:
+        return None

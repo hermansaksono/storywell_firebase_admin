@@ -242,7 +242,9 @@ def view_moods(request, user_id: str, start_date_str: str, end_date_str: str):
                 "timestamp": int(timestamp_id),
                 "event": event['eventName'],
                 "time": time_str,
-                "text": helpers.get_event_info(event, member_by_role)
+                "description": helpers.get_event_info(event, member_by_role),
+                "edit_uri": helpers.get_edit_uri(user, event),
+                "transcript": helpers.get_transcript(event)
             })
 
         daily_logs[date_str] = {

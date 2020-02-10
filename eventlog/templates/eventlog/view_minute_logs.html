@@ -18,11 +18,21 @@
             <b>Caregiver</b>: {{ day_values.adult_steps}} steps, <b>child</b>: {{ day_values.child_steps}} steps<br/>
         </p>
         {% if day_values.minute_logs %}
-        <table border="1" cellspacing="0" bordercolor="#555555">
+        <table>
             {% for min_values in day_values.minute_logs %}
             <tr>
                 <td><b>{{ min_values.time }}</b></td>
-                <td>{{ min_values.text }}</td>
+                <td>
+                    {{ min_values.description }}
+                    {% if min_values.transcript %}
+                    <br/>&quot;{{ min_values.transcript }}&quot;
+                    {% endif %}
+                </td>
+                {% if min_values.edit_uri %}
+                <td><!--suppress HtmlUnknownTarget -->
+                    <a href="{{ min_values.edit_uri }}" class="invisibleInPrint">Edit</a>
+                </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </table>
