@@ -24,6 +24,9 @@ def get_datetime_from_timestamp(timestamp_millis: int) -> datetime:
 def get_date_str_from_datetime(input_date: datetime) -> str:
     return input_date.strftime(DATE_STRING_FORMAT)
 
+def get_date_str_from_timestamp(timestamp_millis: int) -> str:
+    return get_datetime_from_timestamp(timestamp_millis).strftime(DATE_STRING_FORMAT)
+
 
 def get_pretty_date_str(input_datetime: datetime) -> str:
     return input_datetime.strftime(PRETTY_DATE_STRING_FORMAT)

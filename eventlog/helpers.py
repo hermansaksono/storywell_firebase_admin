@@ -81,6 +81,8 @@ def get_compared_data(log_data1, log_data2, user_dict: dict, date_list: list):
                 compared_data[user_index][i] = 2
             elif log_data1[user_index][i] > 0:
                 compared_data[user_index][i] = 1
+            else:
+                compared_data[user_index][i] = 0
     return compared_data
 
 
@@ -202,7 +204,7 @@ def get_member_steps_on_day(member_fitness_data: dict, role: str, date_str: str)
 
 def get_edit_uri(user: User, event: dict) -> Optional[str]:
     event_name: str = event['eventName']
-    event_timestamp: int = event['timestamp']
+    event_timestamp: int = int(event['timestamp'])
     event_params: dict
 
     if 'eventParams' in event :
