@@ -202,6 +202,7 @@ def get_member_steps_on_day(member_fitness_data: dict, role: str, date_str: str)
 
 def get_edit_uri(user: User, event: dict) -> Optional[str]:
     event_name: str = event['eventName']
+    event_timestamp: int = event['timestamp']
     event_params: dict
 
     if 'eventParams' in event :
@@ -211,7 +212,7 @@ def get_edit_uri(user: User, event: dict) -> Optional[str]:
         user_id: str = user.user_id
         story_id: str = event_params["STORY_ID"]
         page_id: str = str(event_params["PAGE_ID"])
-        return "/reflection/edit/{0}/{1}/{2}".format(user_id, story_id, page_id)
+        return "/reflection/edit/{0}/{1}/{2}/{3}".format(user_id, story_id, page_id, event_timestamp)
     else:
         return None
 
