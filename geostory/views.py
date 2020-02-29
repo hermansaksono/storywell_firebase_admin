@@ -1,6 +1,6 @@
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import loader
 from django.views import View
 
@@ -52,6 +52,7 @@ class GeoStoryUpdateView(View):
                 "isShowNeighborhood": is_show_neighborhood,
                 "transcript": geostory_data.get("transcript")
             })
+            return redirect('../all')
         else:
             pass
             # messages.error(request, form.errors)
