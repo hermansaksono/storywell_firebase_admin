@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View All Geostories</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "admin/css/base.css" %}" type="text/css" media="screen" />
+</head>
+<body>
+<div id="content" class="flex">
+    <h1>All Geostories</h1>
+
+    <div class="module">
+
+        <div class="results">
+            <table border="1" cellspacing="0" bordercolor="#555555">
+                <tr>
+                    <th>Creator</th>
+                    <th>Date posted</th>
+                    <th>Is reviewed?</th>
+                    <th>Actions</th>
+                    <th></th>
+                </tr>
+                {% if all_geostories %}
+                {% for geostory in all_geostories %}
+                <tr>
+                    <td><a href="edit/{{ geostory.storyId }}"><b>{{ geostory.username }}</b></a></td>
+                    <td>{{ geostory.datetimeString}}</td>
+                    <td>{% if geostory.isReviewed %} Yes {% endif %}</td>
+                    <td><a href="edit/{{ geostory.storyId }}">Edit</a></td>
+                    <td><a href="https://www.google.com/maps/@{{ geostory.latitude }},{{ geostory.longitude}},16z">
+                        &#128204;
+                    </a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <p>No geostories are available.</p>
+                {% endif %}
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>

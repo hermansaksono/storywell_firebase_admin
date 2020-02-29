@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('group/', include('group.urls')),
     path('log/', include('eventlog.urls')),
+    path('geostory/', include('geostory.urls')),
 ]

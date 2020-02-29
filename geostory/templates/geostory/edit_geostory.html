@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit a Geostory by {{ geostory.username }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "admin/css/base.css" %}" type="text/css" media="screen" />
+</head>
+<body>
+<div id="content" class="flex">
+    <h1>Edit Geostory <a href="{{ geostory.path }}">{{ geostory.storyId }}</a></h1>
+    <div class="module">
+        <p><b>Author</b>: {{ geostory.username }}</p>
+        <p><b>Posted on</b>: {{ geostory.datetimeString }}</p>
+        <p>
+            <b>Neighborhood</b>: {{ geostory.meta.neighborhood }}
+            <a href="https://www.google.com/maps/@{{ geostory.latitude }},{{ geostory.longitude}},16z">&#128204;</a>
+        </p>
+        <p><b>Average steps</b>: {{ geostory.meta.averageSteps }} steps/week</p>
+        <p><b>Bio</b>: {{ geostory.meta.bio }}</p>
+        <p>
+            <b>Audio file</b>: <a href="{{ geostory.storyUri }}">download</a>
+            <!--<audio controls>
+                <source src="{{ geostory.storyUri }}" type="audio/mp4">
+                Your browser does not support the audio element.
+            </audio>-->
+        </p>
+        <form method="post">{% csrf_token %}
+            <fieldset class="module aligned ">
+                <div class="form-row field-user">
+                    {{ geostory_form.as_p }}
+                    {{ meta_form.as_p }}
+                    <input type="submit" value="Save" />
+                </div>
+            </fieldset>
+        </form>
+
+    </div>
+</div>
+
+
+</body>
+</html>
