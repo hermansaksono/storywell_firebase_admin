@@ -17,20 +17,25 @@
                 <tr>
                     <th>Creator</th>
                     <th>Date posted</th>
+                    <th>Neighborhood</th>
+                    <th>Is transcribed?</th>
                     <th>Is reviewed?</th>
                     <th>Actions</th>
-                    <th></th>
                 </tr>
                 {% if all_geostories %}
                 {% for geostory in all_geostories %}
                 <tr>
                     <td><a href="edit/{{ geostory.storyId }}"><b>{{ geostory.username }}</b></a></td>
                     <td>{{ geostory.datetimeString}}</td>
-                    <td>{% if geostory.isReviewed %} Yes {% endif %}</td>
+                    <td>
+                        {{ geostory.meta.neighborhood }}
+                        <a href="https://www.google.com/maps/@{{ geostory.latitude }},{{ geostory.longitude}},16z">
+                            &#128204;
+                        </a>
+                    </td>
+                    <td align="center"> {% if geostory.meta.transcript %} &#9989; {% endif %}</td>
+                    <td align="center">{% if geostory.isReviewed %} &#9989; {% endif %}</td>
                     <td><a href="edit/{{ geostory.storyId }}">Edit</a></td>
-                    <td><a href="https://www.google.com/maps/@{{ geostory.latitude }},{{ geostory.longitude}},16z">
-                        &#128204;
-                    </a></td>
                 </tr>
                 {% endfor %}
                 {% else %}
