@@ -21,8 +21,9 @@ def get_all_geostory(request):
 class GeoStoryUpdateView(View):
     def get(self, request, geostory_id):
         initial = None
-        if request.user.is_authenticated:
-            initial = firebase.get_geostory_by_id(geostory_id)
+        # if request.user.is_authenticated:
+        #    initial = firebase.get_geostory_by_id(geostory_id)
+        initial = firebase.get_geostory_by_id(geostory_id)
         geostory_form = GeostoryForm(initial=initial)
         meta_form = GeostoryMetaForm(initial=initial["meta"])
         context = {

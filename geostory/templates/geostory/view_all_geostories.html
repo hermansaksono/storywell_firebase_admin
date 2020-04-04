@@ -4,48 +4,77 @@
     <meta charset="UTF-8">
     <title>View All Geostories</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static "admin/css/base.css" %}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{% static "mdc-custom.css" %}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
+    <style></style>
 </head>
 <body>
-<div id="content" class="flex">
-    <h1>All Geostories</h1>
-
-    <div class="module">
-
-        <div class="results">
-            <table border="1" cellspacing="0" bordercolor="#555555">
-                <tr>
-                    <th>Creator</th>
-                    <th>Date posted</th>
-                    <th>Neighborhood</th>
-                    <th>Is transcribed?</th>
-                    <th>Is reviewed?</th>
-                    <th>Actions</th>
-                </tr>
-                {% if all_geostories %}
-                {% for geostory in all_geostories %}
-                <tr>
-                    <td><a href="edit/{{ geostory.storyId }}"><b>{{ geostory.username }}</b></a></td>
-                    <td>{{ geostory.datetimeString}}</td>
-                    <td>
-                        {{ geostory.meta.neighborhood }}
-                        <a href="https://www.google.com/maps/@{{ geostory.latitude }},{{ geostory.longitude}},16z">
-                            &#128204;
-                        </a>
-                    </td>
-                    <td align="center"> {% if geostory.meta.transcript %} &#9989; {% endif %}</td>
-                    <td align="center">{% if geostory.isReviewed %} &#9989; {% endif %}</td>
-                    <td><a href="edit/{{ geostory.storyId }}">Edit</a></td>
-                </tr>
-                {% endfor %}
-                {% else %}
-                <p>No geostories are available.</p>
-                {% endif %}
+    <header class="mdc-top-app-bar">
+      <div class="mdc-top-app-bar__row">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+          <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">menu</button>
+          <span class="mdc-top-app-bar__title">All GeoStories</span>
+        </section>
+      </div>
+    </header>
+    <main class="mdc-body">
+        <div class="mdc-data-table">
+            <table class="mdc-data-table__table" aria-label="GeoStories">
+                <thead>
+                    <tr class="mdc-data-table__header-row">
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Creator</th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">GeoStory ID</th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Date posted</th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Neighborhood</th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col"></th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col"></th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody class="mdc-data-table__content">
+                    {% if all_geostories %}
+                    {% for geostory in all_geostories %}
+                    <tr class="mdc-data-table__row">
+                        <td class="mdc-data-table__cell">
+                            <a href="edit/{{ geostory.storyId }}"><b>{{ geostory.username }}</b></a>
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            <a href="https://console.firebase.google.com/u/0/project/wellness-storytelling/database/wellness-storytelling/data/~2Fall_geostory~2F/{{ geostory.storyId }}">
+                                {{ geostory.storyId }}
+                            </a>
+                        </td>
+                        <td class="mdc-data-table__cell">{{ geostory.datetimeString }}</td>
+                        <td class="mdc-data-table__cell">
+                            <a href="https://www.google.com/maps/@{{ geostory.latitude }},{{ geostory.longitude}},16z">
+                                {{ geostory.meta.neighborhood }}
+                            </a>
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            {% if geostory.meta.transcript %}Transcribed{% endif %}
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            {% if geostory.isReviewed %}Reviewed{% endif %}
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            <a href="edit/{{ geostory.storyId }}" class="mdc-button">
+                                <div class="mdc-button__ripple"></div>
+                                <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <p>No geostories are available.</p>
+                    {% endif %}
+                </tbody>
             </table>
         </div>
+    </main>
 
-    </div>
-</div>
+
 
 
 </body>

@@ -144,3 +144,7 @@ ul, ol {
 		display: none;
 	}
 }
+
+.mdc-body {
+	margin: 64px 16px 16px 16px;
+}
