@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
-    <style></style>
 </head>
 <body>
     <header class="mdc-top-app-bar">
@@ -41,13 +40,15 @@
                             <a href="edit/{{ geostory.storyId }}"><b>{{ geostory.username }}</b></a>
                         </td>
                         <td class="mdc-data-table__cell">
-                            <a href="https://console.firebase.google.com/u/0/project/wellness-storytelling/database/wellness-storytelling/data/~2Fall_geostory~2F/{{ geostory.storyId }}">
+                            <a href="https://console.firebase.google.com/u/0/project/wellness-storytelling/database/wellness-storytelling/data/~2Fall_geostory~2F/{{ geostory.storyId }}"
+                                target="_blank">
                                 {{ geostory.storyId }}
                             </a>
                         </td>
                         <td class="mdc-data-table__cell">{{ geostory.datetimeString }}</td>
                         <td class="mdc-data-table__cell">
-                            <a href="https://www.google.com/maps/@{{ geostory.latitude }},{{ geostory.longitude}},16z">
+                            <a href="https://www.google.com/maps/?q={{ geostory.meta.neighborhood }}+%40{{ geostory.latitude }},{{ geostory.longitude}}"
+                                target="_blank">
                                 {{ geostory.meta.neighborhood }}
                             </a>
                         </td>

@@ -13,7 +13,7 @@ def get_all_geostory(request):
     firebase.get_all_stories()
     template = loader.get_template('geostory/view_all_geostories.html')
     context = {
-        'all_geostories': firebase.get_all_stories(),
+        'all_geostories': firebase.get_all_stories(order="desc"),
     }
     return HttpResponse(template.render(context, request))
 

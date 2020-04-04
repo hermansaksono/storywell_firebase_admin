@@ -4,10 +4,10 @@ from pyrebase.pyrebase import Database, PyreResponse
 from firebase import firebase_db, firebase_utils
 
 
-def get_all_stories() -> list:
+def get_all_stories(order="desc") -> list:
     db: Database = firebase_db.get()
 
-    all_geostory_raw = db.child("all_geostory").order_by_child("lastUpdateTimestamp").get()
+    all_geostory_raw = db.child("all_geostory").order_by_child("lastUpdateTimestamp", ).get()
     all_geostory_output = list()
 
     for geostory_raw in all_geostory_raw.each():
@@ -15,6 +15,9 @@ def get_all_stories() -> list:
         geostory_datetime: datetime = firebase_utils.get_datetime_from_timestamp(geostory["lastUpdateTimestamp"])
         geostory['datetimeString'] = firebase_utils.get_pretty_datetime_str(geostory_datetime)
         all_geostory_output.append(geostory)
+
+    if order is "desc":
+        all_geostory_output.reverse()
 
     return all_geostory_output
 

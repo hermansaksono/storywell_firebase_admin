@@ -1,8 +1,8 @@
 body {
 	margin: 0;
 	padding: 0;
-	font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
-	font-size: 14pt;
+	font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
+	font-size: 10pt;
 	background: #ffffff;
 }
 
@@ -11,6 +11,68 @@ a, a:visited {
 	text-decoration: none;
 }
 
+fieldset {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
 .mdc-body {
 	padding: 80px 16px 16px 16px;
+}
+
+.mdc-custom-form {
+	width: 320px;
+}
+
+.mdc-custom-form p {
+	border-bottom: 1px solid #DDDDDD;
+	padding: 8px;
+	margin: 0;
+	color: #555555;
+}
+
+.mdc-custom-form label {
+	clear: both;
+	display: block;
+	width: 95%;
+	color: #000000;
+}
+
+.mdc-custom-form h2 {
+	color: #1a237e;
+	font-size: 1em;
+	padding: 4px 8px 4px 8px;
+	margin: 0;
+}
+
+.mdc-custom-form p + h2 {
+	margin: 16px 0 0 0;
+}
+
+.mdc-custom-form form p {
+	overflow: auto;
+}
+
+.mdc-custom-form form p label {
+	float: left;
+}
+
+.mdc-custom-form input[type="radio"],
+.mdc-custom-form input[type="checkbox"] {
+	margin: 0;
+	float: right;
+}
+
+.mdc-custom-form form label + textarea {
+	font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
+	font-size: 10pt;
+	margin: 8px 0 0 0;
+	border: 1px solid #cccccc;
+	border-radius: 2px;
+}
+
+img.mdc-data-table-icon {
+	width: 16px;
+	height: 16px;
 }
