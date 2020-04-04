@@ -4,6 +4,8 @@ body {
 	font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
 	font-size: 10pt;
 	background: #ffffff;
+	display: flex;
+	height: 100vh;
 }
 
 a, a:visited {
@@ -17,8 +19,31 @@ fieldset {
 	border: none;
 }
 
+/* CUSTOM MDC-SOURCED THEME */
+.mdc-drawer-app-content {
+  flex: auto;
+  overflow: auto;
+  position: relative;
+}
+
+.main-content {
+  overflow: auto;
+  height: 100%;
+	padding: 4px;
+}
+
+.app-bar {
+  position: absolute;
+}
+
+.mdc-top-app-bar {
+  z-index: 7 !important;
+}
+
+
+/* CUSTOM THEME */
 .mdc-body {
-	padding: 80px 16px 16px 16px;
+	padding: 64px 16px 16px 16px;
 }
 
 .mdc-custom-form {
@@ -27,7 +52,7 @@ fieldset {
 
 .mdc-custom-form p {
 	border-bottom: 1px solid #DDDDDD;
-	padding: 8px;
+	padding: 12px;
 	margin: 0;
 	color: #555555;
 }
@@ -42,7 +67,7 @@ fieldset {
 .mdc-custom-form h2 {
 	color: #1a237e;
 	font-size: 1em;
-	padding: 4px 8px 4px 8px;
+	padding: 12px 12px 4px 12px;
 	margin: 0;
 }
 

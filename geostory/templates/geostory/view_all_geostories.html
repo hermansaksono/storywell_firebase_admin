@@ -13,12 +13,31 @@
     <header class="mdc-top-app-bar">
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-          <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">menu</button>
-          <span class="mdc-top-app-bar__title">All GeoStories</span>
+          <!--<button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">menu</button>-->
+          <span class="mdc-top-app-bar__title">GeoStories</span>
         </section>
       </div>
     </header>
-    <main class="mdc-body">
+    <aside class="mdc-drawer mdc-permanent-drawer mdc-top-app-bar--fixed-adjust">
+        <div class="mdc-drawer__content">
+            <div class="mdc-list">
+                <a class="mdc-list-item" href="/group/all">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">group</i>
+                    <span class="mdc-list-item__text">Families</span>
+                </a>
+                <a class="mdc-list-item" href="fitness/all">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">directions_run</i>
+                    <span class="mdc-list-item__text">Fitness</span>
+                </a>
+                <a class="mdc-list-item mdc-list-item--activated" href="/geostory/all">
+                    <i class="material-icons mdc-list-item__graphic" aria-current="page">chat_bubble</i>
+                    <span class="mdc-list-item__text">GeoStories</span>
+                </a>
+            </div>
+        </div>
+    </aside>
+    <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
+    <main class="main-content" id="main-content">
         <div class="mdc-data-table">
             <table class="mdc-data-table__table" aria-label="GeoStories">
                 <thead>
@@ -74,6 +93,8 @@
             </table>
         </div>
     </main>
+  </div>
+
 
 
 
