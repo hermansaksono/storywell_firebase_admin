@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "default_html_head.html" %}
+<body>
+    {% include "default_header.html" %}
+    {% include "default_nav.html" %}
+    <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
+        <main class="mdc-body">
+            <div class="mdc-data-table">
+                <table class="mdc-data-table__table" aria-label="GeoStories">
+                    <thead>
+                        <tr class="mdc-data-table__header-row">
+                            <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Family ID</th>
+                            <th class="mdc-data-table__header-cell" role="columnheader" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="mdc-data-table__content">
+                        {% if all_families %}
+                        {% for family in all_families %}
+                        <tr class="mdc-data-table__row">
+                            <td class="mdc-data-table__cell">
+                                <b>{{ family }}</b>
+                            </td>
+                            <td class="mdc-data-table__cell">
+                                <a href="/eventlog/refresh/{{ family }}/until/{{ end_date }}/" class="mdc-button">
+                                    <div class="mdc-button__ripple"></div>
+                                    <i class="material-icons mdc-icon-button__icon">refresh</i>
+                                    Refresh Logs
+                                </a>
+                                <a href="range/{{ family }}" class="mdc-button">
+                                    <div class="mdc-button__ripple"></div>
+                                    <i class="material-icons mdc-icon-button__icon">bar_chart</i>
+                                    View Logs
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <p>No family yet.</p>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
