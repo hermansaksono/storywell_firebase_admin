@@ -27,23 +27,23 @@ fieldset {
 }
 
 .main-content {
-  overflow: auto;
-  height: 100%;
-	padding: 4px;
+    overflow: auto;
+    height: 100%;
+    padding: 4px;
 }
 
 .app-bar {
-  position: absolute;
+    position: absolute;
 }
 
 .mdc-top-app-bar {
-  z-index: 7 !important;
+    z-index: 7 !important;
 }
 
 
 /* CUSTOM THEME */
 .mdc-body {
-	padding: 64px 16px 16px 16px;
+	padding: 4px 16px 16px 4px;
 }
 
 .mdc-custom-form {

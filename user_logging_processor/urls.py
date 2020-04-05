@@ -22,4 +22,5 @@ urlpatterns = [
     path('log/', include('eventlog.urls')),
     path('geostory/', include('geostory.urls')),
     path('family/', include('family.urls')),
+    path('fitness/', include('fitness.urls'))
 ]
