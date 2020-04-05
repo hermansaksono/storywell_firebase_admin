@@ -5,7 +5,7 @@
     {% include "default_header.html" %}
     {% include "default_nav.html" %}
     <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
-    <main class="main-content" id="main-content">
+    <main class="mdc-body">
         <div class="mdc-data-table">
             <table class="mdc-data-table__table" aria-label="GeoStories">
                 <thead>
@@ -33,12 +33,7 @@
                             </a>
                         </td>
                         <td class="mdc-data-table__cell">{{ geostory.datetimeString }}</td>
-                        <td class="mdc-data-table__cell">
-                            <a href="https://www.google.com/maps/?q={{ geostory.meta.neighborhood }}+%40{{ geostory.latitude }},{{ geostory.longitude}}"
-                                target="_blank">
-                                {{ geostory.meta.neighborhood }}
-                            </a>
-                        </td>
+                        <td class="mdc-data-table__cell">{{ geostory.meta.neighborhood }}</td>
                         <td class="mdc-data-table__cell">
                             {% if geostory.meta.transcript %}Transcribed{% endif %}
                         </td>
@@ -55,7 +50,9 @@
                     </tr>
                     {% endfor %}
                     {% else %}
-                    <p>No geostories are available.</p>
+                    <tr>
+                        <td class="mdc-data-table__cell" colspan="7">No geostories are available.</td>
+                    </tr>
                     {% endif %}
                 </tbody>
             </table>

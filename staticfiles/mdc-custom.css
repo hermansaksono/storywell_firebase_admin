@@ -121,3 +121,8 @@ img.mdc-data-table-icon {
 	width: 16px;
 	height: 16px;
 }
+
+.mdc-custom-form .mdc_editor_external_link {
+    margin: -12px 0 0 0;
+    float: right;
+}

@@ -3,6 +3,7 @@
 {% include "default_html_head.html" %}
 <body>
     {% include "default_header.html" %}
+    <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
     <main class="mdc-body">
         <div class="mdc-custom-form">
             <h2>GeoStory Information</h2>
@@ -10,16 +11,26 @@
             <p><label>Posted on</label> {{ geostory.datetimeString }}</p>
             <p>
                 <label>Neighborhood</label> {{ geostory.meta.neighborhood }}
-                <a href="https://www.google.com/maps/@{{ geostory.latitude }},{{ geostory.longitude}},16z"
-                   target="_blank">
-                    &#128204;
+                <a href="https://www.google.com/maps/?q={{ geostory.meta.neighborhood }}+%40{{ geostory.latitude }},{{ geostory.longitude}}"
+                target="_blank" class="mdc_editor_external_link">
+                    <i class="material-icons mdc-icon-button__icon">location_on</i>
                 </a>
             </p>
             <p><label>Average steps</label> {{ geostory.meta.averageSteps }} steps/week</p>
             <p><label>Bio</label> {{ geostory.meta.bio }}</p>
-            <p><label>Firebase</label> <a href="{{ geostory.path }}" target="_blank">{{ geostory.storyId }}</a></p>
             <p>
-                <label>Audio file</label> <a href="{{ geostory.storyUri }}">download</a>
+                <label>Firebase</label>
+                {{ geostory.storyId }}
+                <a href="{{ geostory.path }}" target="_blank" class="mdc_editor_external_link">
+                    <i class="material-icons mdc-icon-button__icon">open_in_new</i>
+                </a>
+            </p>
+            <p>
+                <label>Audio file</label>
+                Download now
+                <a href="{{ geostory.storyUri }}" class="mdc_editor_external_link">
+                    <i class="material-icons mdc-icon-button__icon">cloud_download</i>
+                </a>
                 <!--<audio controls>
                     <source src="{{ geostory.storyUri }}" type="audio/mp4">
                     Your browser does not support the audio element.
@@ -32,6 +43,7 @@
                     <div class="form-row field-user">
                         {{ geostory_form.as_p }}
                         {{ meta_form.as_p }}
+                        <br/>
                         <button class="mdc-button" value="Save">
                             <div class="mdc-button__ripple"></div>
                             <span class="mdc-button__label">Save</span>
@@ -42,7 +54,6 @@
         </div>
         <br/>
     </main>
-
-
+    </div>
 </body>
 </html>
