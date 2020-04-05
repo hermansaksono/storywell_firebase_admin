@@ -26,6 +26,10 @@ def get_date_str_from_datetime(input_date: datetime) -> str:
     return input_date.strftime(DATE_STRING_FORMAT)
 
 
+def get_datetime_from_date_str(date_str: str) -> datetime:
+    return datetime.strptime(date_str, DATE_STRING_FORMAT)
+
+
 def get_date_str_from_timestamp(timestamp_millis: int) -> str:
     return get_datetime_from_timestamp(timestamp_millis).strftime(DATE_STRING_FORMAT)
 

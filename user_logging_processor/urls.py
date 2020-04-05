@@ -21,4 +21,5 @@ urlpatterns = [
     path('group/', include('group.urls')),
     path('log/', include('eventlog.urls')),
     path('geostory/', include('geostory.urls')),
+    path('family/', include('family.urls')),
 ]

@@ -47,7 +47,7 @@ fieldset {
 }
 
 .mdc-custom-form {
-	width: 320px;
+	width: 480px;
 }
 
 .mdc-custom-form p {
@@ -65,18 +65,24 @@ fieldset {
 }
 
 .mdc-custom-form h2 {
-	color: #1a237e;
+	color: #6200ee;
 	font-size: 1em;
 	padding: 12px 12px 4px 12px;
 	margin: 0;
 }
 
 .mdc-custom-form p + h2 {
-	margin: 16px 0 0 0;
+	border-top: 1px solid #666666;
+    margin: -1px 0 0 0;
+	padding: 16px 12px 4px 12px;
 }
 
 .mdc-custom-form form p {
 	overflow: auto;
+}
+
+.mdc-custom-form form p:hover {
+	background: #E8EAF6;
 }
 
 .mdc-custom-form form p label {
@@ -89,12 +95,26 @@ fieldset {
 	float: right;
 }
 
+.mdc-custom-form form label + input[type="text"],
 .mdc-custom-form form label + textarea {
 	font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
-	font-size: 10pt;
+	font-size: 12pt;
 	margin: 8px 0 0 0;
-	border: 1px solid #cccccc;
-	border-radius: 2px;
+	border: 1px solid #eeeeee;
+    border-bottom: 2px solid #aaaaaa;
+	border-radius: 4px 4px 0 0;
+    padding: 16px 12px;
+}
+
+.mdc-custom-form form label + input[type="text"]:active,
+.mdc-custom-form form label + textarea:active {
+	font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
+	font-size: 12pt;
+	margin: 8px 0 0 0;
+	border: 1px solid #eeeeee;
+    border-bottom: 2px solid #6200ee;
+	border-radius: 4px 4px 0 0;
+    padding: 16px 12px;
 }
 
 img.mdc-data-table-icon {

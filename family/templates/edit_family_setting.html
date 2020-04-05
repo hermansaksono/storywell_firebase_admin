@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include "default_html_head.html" %}
+</head>
+<body>
+    {% include "default_header.html" %}
+    <main class="mdc-body">
+        <div class="mdc-custom-form">
+            <h2>Caregiver</h2>
+            <p><label>Name</label> {{ family_setting.group.members.0.name }}</p>
+            <p><label>Person id</label>{{ family_setting.group.members.0.id }}</p>
+            <p><label>Last bluetooth sync</label>{{ family_setting.caregiverLastSync }}</p>
+
+            <h2>Child</h2>
+            <p><label>Name</label> {{ family_setting.group.members.1.name }}</p>
+            <p><label>Person id</label>{{ family_setting.group.members.1.id }}</p>
+            <p><label>Last bluetooth sync</label>{{ family_setting.childLastSync }}</p>
+
+            <p>
+                <label>Firebase</label>
+                <a href="{{ family_setting.path }}" target="_blank">Open in Firebase</a>
+            </p>
+
+            <h2>Settings</h2>
+            <form method="post">{% csrf_token %}
+                <fieldset class="module aligned ">
+                    <div class="form-row field-user">
+                        {{ family_setting_form.as_p }}
+                        <br/>
+                        <button class="mdc-button" value="Save">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label">Save</span>
+                        </button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <br/>
+    </main>
+
+
+</body>
+</html>
