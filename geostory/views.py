@@ -13,6 +13,7 @@ def get_all_geostory(request):
     firebase.get_all_stories()
     template = loader.get_template('geostory/view_all_geostories.html')
     context = {
+        'title': "GeoStories",
         'all_geostories': firebase.get_all_stories(order="desc"),
     }
     return HttpResponse(template.render(context, request))
@@ -27,6 +28,8 @@ class GeoStoryUpdateView(View):
         geostory_form = GeostoryForm(initial=initial)
         meta_form = GeostoryMetaForm(initial=initial["meta"])
         context = {
+            'title': "Edit GeoStory by " + initial["username"],
+            'parent_uri': "/geostory/all",
             'geostory_form': geostory_form,
             'meta_form': meta_form,
             'geostory': initial

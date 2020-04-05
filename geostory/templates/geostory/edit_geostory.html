@@ -1,25 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Edit a GeoStory by {{ geostory.username }}</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static "mdc-custom.css" %}" type="text/css" media="screen" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
+{% include "default_html_head.html" %}
 </head>
 <body>
-    <header class="mdc-top-app-bar">
-      <div class="mdc-top-app-bar__row">
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-          <a class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" href="../all">
-              arrow_back
-          </a>
-          <span class="mdc-top-app-bar__title">Edit Geostory</span>
-        </section>
-      </div>
-    </header>
+    {% include "default_header.html" %}
     <main class="mdc-body">
         <div class="mdc-custom-form">
             <h2>GeoStory Information</h2>
@@ -57,7 +42,7 @@
                 </fieldset>
             </form>
         </div>
-
+        <br/>
     </main>
 
 
