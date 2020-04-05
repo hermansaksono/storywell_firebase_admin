@@ -15,8 +15,19 @@
                     </tr>
                 </thead>
                 <tbody class="mdc-data-table__content">
-                    {% if fitness_data %}
-                    {% for key, value in fitness_data.items %}
+                    {% if data.last_sync %}
+                    <tr>
+                        <td class="mdc-data-table__cell"><b>Last sync</b></td>
+                        <td class="mdc-data-table__cell mdc-data-table__cell--numeric">
+                            {{ data.last_sync.caregiver }}
+                        </td>
+                        <td class="mdc-data-table__cell mdc-data-table__cell--numeric">
+                            {{ data.last_sync.child }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if data.fitness_data %}
+                    {% for key, value in data.fitness_data.items %}
                     <tr class="mdc-data-table__row">
                         <td class="mdc-data-table__cell"><b>{{ key }}</b></td>
                         <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{{ value.caregiver }}</td>

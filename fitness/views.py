@@ -19,6 +19,6 @@ def get_family_daily_fitness(request, family_id):
     context = {
         'title': "Family Fitness Data: " + family_id,
         'parent_uri': "/fitness/all",
-        'fitness_data': firebase.get_family_fitness_by_family_id(family_id, 60)
+        'data': firebase.get_family_fitness_by_family_id(family_id, 60)
     }
     return HttpResponse(template.render(context, request))

@@ -18,7 +18,17 @@ def get_family_fitness_by_family_id(family_id: str, limit=60):
     caregiver_id = family_setting["group"]["members"][0]["id"]
     child_id = family_setting["group"]["members"][1]["id"]
 
-    return get_family_fitness_data(caregiver_id, child_id, limit)
+    output = {
+        "last_sync": {
+            "caregiver": firebase_utils.get_datetime_from_timestamp(
+                family_setting['fitnessSyncInfo']['caregiverDeviceInfo']['lastSyncTime']),
+            "child": firebase_utils.get_datetime_from_timestamp(
+                family_setting['fitnessSyncInfo']['childDeviceInfo']['lastSyncTime'])
+        },
+        "fitness_data": get_family_fitness_data(caregiver_id, child_id, limit)
+    }
+
+    return output
 
 
 def get_family_ref_by_id(family_id: str) -> Database:
