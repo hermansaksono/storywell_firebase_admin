@@ -9,11 +9,11 @@
                 <form method="post">{% csrf_token %}
                     <fieldset class="module aligned ">
                         <div class="form-row field-user">
-                            {{ date_range_form.as_p }}
+                            {{ refresh_log_form.as_p }}
                             <br/>
                             <button class="mdc-button" value="Save">
                                 <div class="mdc-button__ripple"></div>
-                                <span class="mdc-button__label">View Logs</span>
+                                <span class="mdc-button__label">Refresh Logs</span>
                             </button>
                         </div>
                     </fieldset>

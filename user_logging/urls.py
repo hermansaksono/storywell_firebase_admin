@@ -6,8 +6,10 @@ from eventlog import views as eventlog_views
 urlpatterns = [
     # ex: /all
     path('all', views.get_all_families, name='get_all_families'),
+    # ex: /refresh/<user_id>
+    path('refresh/<str:family_id>', views.RefreshLogView.as_view()),
     # ex: /range/<user_id>
-    path('range/<str:family_id>', views.select_date_range_for_logs, name='select_date_range_for_logs'),
+    path('range/<str:family_id>', views.SelectDateRangeForLogView.as_view()),
     # ex: /edit/<geostory_id>
     # path('daily/<str:family_id>', views.get_family_daily_fitness, name="get_family_daily_fitness"),
 
