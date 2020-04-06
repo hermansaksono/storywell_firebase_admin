@@ -8,9 +8,8 @@ from gcloud.datastore import Query
 
 from eventlog import values
 from eventlog.models import Log
-from firebase import firebase_db, firebase_utils
+from firebase import firebase_utils
 from group.models import User, Person
-from pyrebase.pyrebase import PyreResponse
 
 
 NOW_STR: str = "NOW"
@@ -179,12 +178,19 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
         story_id: str = event_params['STORY_ID']
         return "Unlocked a story chapter in: " + values.stories[story_id] + "."
     elif event_name == "GEOSTORY_SUBMITTED":
-        return "Adult shared a story"
+        return "Adult shared a community story"
     elif event_name == "GEOSTORY_VIEWED":
         return "Listened to a community story"
-    elif event_name == "EMOTION_LOGGED":
-        emotion_str: str = event_params['list_of_emotions'].join(", ")
-        return "Emotion: " + event_params['role'] + " felt + " + emotion_str + ". "
+    elif event_name == "GEOSTORY_REACTION_ADDED":
+        story_author_str: str = event_params["geoStoryAuthorNickname"]
+        reaction_str: str = event_params["reaction"]
+        return "Reacted with" + reaction_str + " to a story by " + story_author_str + "."
+    elif event_name == "EMOTION_LOGGED_ADULT":
+        emotion_str: str = ", ".join(json.loads(event_params['list_of_emotions']))
+        return "Caregiver logged this emotion: " + emotion_str + ". "
+    elif event_name == "EMOTION_LOGGED_CHILD":
+        emotion_str: str = ", ".join(json.loads(event_params['list_of_emotions']))
+        return "Child logged this emotion: " + emotion_str + ". "
     elif event_name == "APP_STARTUP":
         return "Starting the app"
 

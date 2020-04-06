@@ -3,8 +3,8 @@ from django import forms
 
 
 class LogRangeForm(forms.Form):
-    start_datetime = datetime.now()
-    end_datetime = start_datetime - timedelta(days=30)
+    end_datetime = datetime.now()
+    start_datetime = end_datetime - timedelta(days=30)
     years_range = range(2018, start_datetime.year + 6)
     start_date = forms.DateField(
         label="Start date", initial=start_datetime, widget=forms.SelectDateWidget(years=years_range))

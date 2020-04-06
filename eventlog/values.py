@@ -1,5 +1,5 @@
 event_names: list = [
-    "APP_STARTUP",
+    # "APP_STARTUP",
     "READ_STORY",
     "REFLECTION_RESPONDED",
     "REFLECTION_PLAYBACK_START",
@@ -8,7 +8,9 @@ event_names: list = [
     "STORY_UNLOCKED",
     "GEOSTORY_VIEWED",
     "GEOSTORY_SUBMITTED",
-    "EMOTION_LOGGED"
+    "GEOSTORY_REACTION_ADDED",
+    "EMOTION_LOGGED_ADULT",
+    "EMOTION_LOGGED_CHILD",
 ]
 
 stories: dict = {
@@ -19,6 +21,40 @@ stories: dict = {
     "17": "Sally and the Boomerang School",
     "3": "Sydney the Sloth and the Uphill Ride",
     "22": "Leon is Hungry",
+    "23": "Getting Started",
+    "25": "Relock Test",
     "26": "Fiona and the Case of Missing Carrots",
-    "27": "Frank the Fish is Learning How to Swim"
+    "27": "Frank the Fish is Learning How to Swim",
+    "28": "Eli Geostory & Memo Test",
+    "29": "Eli Geostory & Memo Test",
+    "30": "Sindi and the Moon",
+    "31": "Danny the Dragon",
+    "32": "The Red Raincoat",
+    "33": "Why is Nita Upside Down?",
+    "35": "Small Bird's Big Adventure"
 }
+
+panas: dict = {
+    "0": "Enthusiastic",
+    "1": "Interested",
+    "2": "Determined",
+    "3": "Excited",
+    "4": "Inspired",
+    "5": "Alert",
+    "6": "Active",
+    "7": "Strong",
+    "8": "Proud",
+    "9": "Attentive",
+    "10": "Scared",
+    "11": "Afraid",
+    "12": "Upset",
+    "13": "Distressed",
+    "14": "Jittery",
+    "15": "Nervous",
+    "16": "Ashamed",
+    "17": "Guilty",
+    "18": "Irritable",
+    "19": "Hostile",
+}
+
+
