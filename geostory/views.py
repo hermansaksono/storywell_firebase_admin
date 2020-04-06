@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.views import View
 
+from admin import constants, nav
 from firebase import firebase_utils
 from geostory import firebase
 from geostory.forms import GeostoryForm, GeostoryMetaForm
@@ -14,6 +15,7 @@ def get_all_geostory(request):
     template = loader.get_template('geostory/view_all_geostories.html')
     context = {
         'title': "GeoStories",
+        'nav': nav.get_nav(active=constants.GEOSTORIES),
         'all_geostories': firebase.get_all_stories(order="desc"),
     }
     return HttpResponse(template.render(context, request))

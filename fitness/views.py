@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 
+from admin import nav, constants
 from fitness import firebase
 
 
@@ -9,6 +10,7 @@ def get_all_families(request):
     template = loader.get_template('view_all_family_fitness.html')
     context = {
         'title': "Family Fitness",
+        'nav': nav.get_nav(active=constants.FITNESS),
         'all_families': firebase.get_all_families_shallow(),
     }
     return HttpResponse(template.render(context, request))

@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.views import View
 
+from admin import nav, constants
 from family.forms import FamilySettingForm
 from firebase import firebase_utils
 from family import firebase
@@ -14,6 +15,7 @@ def get_all_families(request):
     template = loader.get_template('view_all_families.html')
     context = {
         'title': "Families",
+        'nav': nav.get_nav(active=constants.FAMILY),
         'all_families': firebase.get_all_families_shallow(),
     }
     return HttpResponse(template.render(context, request))

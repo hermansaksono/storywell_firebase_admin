@@ -6,15 +6,18 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.views import View
 
+from admin import nav, constants
 from firebase import firebase_utils
 
 from fitness import firebase
 from . import forms
 
+
 def get_all_families(request):
     template = loader.get_template('view_all_family_logs.html')
     context = {
         'title': "Family Logs",
+        'nav': nav.get_nav(active=constants.LOGS),
         'end_date': firebase_utils.get_date_str_from_datetime(datetime.now()),
         'all_families': firebase.get_all_families_shallow(),
     }
