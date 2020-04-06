@@ -190,13 +190,15 @@ def __refresh_log_by_date(user: User, date_string: str) -> bool:
         return True
 
 
-def view_moods(request, user_id: str, start_date_str: str, end_date_str: str):
+def view_moods(request, user_id: str, start_date_str: str, end_date_str: str, show_data="not_raw"):
     try:
         user: User = User.objects.get(user_id=user_id)
     except User.DoesNotExist:
         return HttpResponse("User not found")
 
     db = firebase_db.get()
+
+    is_show_raw = False if show_data is "not_raw" else True
 
     # Retrieve daily logs in raw
     raw_daily_logs: Query = db.child("user_logging")\
@@ -235,7 +237,12 @@ def view_moods(request, user_id: str, start_date_str: str, end_date_str: str):
         timestamp_logs = list()
 
         # Retrieve logging data
-        for timestamp_id in helpers.get_filtered_logs(raw_timestamp_logs, values.event_names):
+        if is_show_raw:
+            logs_to_iterate = list(raw_timestamp_logs.keys())
+        else:
+            logs_to_iterate = helpers.get_filtered_logs(raw_timestamp_logs, values.event_names)
+
+        for timestamp_id in logs_to_iterate:
             event: dict = raw_timestamp_logs[timestamp_id]
             time_str: str = helpers.get_friendly_time_from_timestamp(int(timestamp_id))
             timestamp_logs.append({
@@ -259,7 +266,8 @@ def view_moods(request, user_id: str, start_date_str: str, end_date_str: str):
         'user_id': user_id,
         'start_date': helpers.get_friendly_date_from_str(start_date_str),
         'end_date': helpers.get_friendly_date_from_str(end_date_str),
-        'log_data': dict(sorted(daily_logs.items(), reverse=True))
+        'log_data': dict(sorted(daily_logs.items(), reverse=True)),
+        'is_show_raw': is_show_raw
     }
 
     return HttpResponse(template.render(context, request))

@@ -14,6 +14,7 @@ event_names: list = [
 ]
 
 stories: dict = {
+    "1": "Eli and the Red Hat Blown by the Wind",
     "13": "Getting Started",
     "19": "Eli and the Red Hat Blown by the Wind",
     "20": "	Have You Ever Seen a Unicorn?",

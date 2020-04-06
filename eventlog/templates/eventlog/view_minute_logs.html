@@ -22,6 +22,11 @@
             {% for min_values in day_values.minute_logs %}
             <tr>
                 <td><b>{{ min_values.time }}</b></td>
+                {% if is_show_raw %}
+                <td>
+                    <b>{{ min_values.event }}</b>
+                </td>
+                {% endif %}
                 <td>
                     {{ min_values.description }}
                     {% if min_values.transcript %}

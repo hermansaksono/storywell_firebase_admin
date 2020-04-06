@@ -15,4 +15,5 @@ urlpatterns = [
 
     # ex: /emotions/<user_id>/<start_date_str>/<end_date_str>/
     path('emotions/<str:user_id>/<str:start_date_str>/<str:end_date_str>', eventlog_views.view_moods, name='view_moods'),
+    path('emotions/<str:user_id>/<str:start_date_str>/<str:end_date_str>/<str:show_data>', eventlog_views.view_moods, name='view_moods'),
 ]

@@ -9,9 +9,10 @@ class LogRangeForm(forms.Form):
     start_date = forms.DateField(
         label="Start date", initial=start_datetime, widget=forms.SelectDateWidget(years=years_range))
     end_date = forms.DateField(label="End date", initial=end_datetime, widget=forms.SelectDateWidget(years=years_range))
+    is_show_raw = forms.BooleanField(label="Show raw logs", initial=False, required=False)
 
     class Meta:
-        fields = ["start_date", "end_date"]
+        fields = ["start_date", "end_date", "is_show_raw"]
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.

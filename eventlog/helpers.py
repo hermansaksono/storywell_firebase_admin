@@ -193,6 +193,11 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
         return person_child.name + " logged this emotion: " + emotion_str + ". "
     elif event_name == "APP_STARTUP":
         return "Starting the app"
+    else:
+        if 'eventParams' in event:
+            return str(event_params)
+        else:
+            return ""
 
 
 def get_filtered_logs(unfiltered_logs: dict, event_names: list) -> list:
