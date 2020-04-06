@@ -13,7 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
+from django.http import HttpResponseRedirect
 from django.urls import path, include
 
 urlpatterns = [
@@ -23,5 +25,6 @@ urlpatterns = [
     path('geostory/', include('geostory.urls')),
     path('family/', include('family.urls')),
     path('fitness/', include('fitness.urls')),
-    path('log/', include('user_logging.urls'))
+    path('log/', include('user_logging.urls')),
+    url(r'^$', lambda r: HttpResponseRedirect('family/all'))
 ]
