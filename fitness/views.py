@@ -20,6 +20,13 @@ def get_family_daily_fitness(request, family_id):
     template = loader.get_template('view_family_fitness.html')
     context = {
         'title': "Family Fitness Data: " + family_id,
+        'actions': [
+            {
+                "uri": "../sync/" + family_id,
+                "title": "Sync fitness data",
+                "mdc_icon": "sync"
+            }
+        ],
         'parent_uri': "/fitness/all",
         'data': firebase.get_family_fitness_by_family_id(family_id, 60)
     }
