@@ -11,12 +11,24 @@
             <h2>Caregiver</h2>
             <p><label>Name</label> {{ family_setting.group.members.0.name }}</p>
             <p><label>Person id</label>{{ family_setting.group.members.0.id }}</p>
-            <p><label>Last bluetooth sync</label>{{ family_setting.caregiverLastSync }}</p>
+            <p>
+                <label>Last bluetooth sync</label>
+                {{ family_setting.caregiverLastSync }}
+                <a href="/fitness/refresh/{{ family }}" class="mdc_editor_external_link">
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">sync</i>
+                </a>
+            </p>
 
             <h2>Child</h2>
             <p><label>Name</label> {{ family_setting.group.members.1.name }}</p>
             <p><label>Person id</label>{{ family_setting.group.members.1.id }}</p>
-            <p><label>Last bluetooth sync</label>{{ family_setting.childLastSync }}</p>
+            <p>
+                <label>Last bluetooth sync</label>
+                {{ family_setting.childLastSync }}
+                <a href="/fitness/refresh/{{ family }}" class="mdc_editor_external_link">
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">sync</i>
+                </a>
+            </p>
 
             <p>
                 <label>Firebase</label>
