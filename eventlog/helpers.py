@@ -149,6 +149,8 @@ def get_friendly_time_from_timestamp(timestamp_millis: int) -> str:
 
 
 def get_event_info(event: dict, member_by_role: dict) -> str:
+    person_adult: Person = member_by_role["P"]
+    person_child: Person = member_by_role["C"]
     event_name: str = event['eventName']
     event_params: dict
     if 'eventParams' in event :
@@ -163,8 +165,6 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
         return "Replaying the recorded answer"
     elif event_name == "CHALLENGE_PICKED":
         challenge_data = json.loads(event_params['CHALLENGE_JSON'])
-        person_adult: Person = member_by_role["P"]
-        person_child: Person = member_by_role["C"]
         adult_goal = round(challenge_data['challenges_by_person'][str(person_adult.person_id)]["goal"])
         child_goal = round(challenge_data['challenges_by_person'][str(person_child.person_id)]["goal"])
         return "Picked a fitness challenge. Caregiver: {0} steps, child {1} steps.".format(adult_goal, child_goal)
@@ -178,19 +178,19 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
         story_id: str = event_params['STORY_ID']
         return "Unlocked a story chapter in: " + values.stories[story_id] + "."
     elif event_name == "GEOSTORY_SUBMITTED":
-        return "Adult shared a community story"
+        return person_adult.name + " shared a community story"
     elif event_name == "GEOSTORY_VIEWED":
-        return "Listened to a community story"
+        return person_adult.name  + " listened to a community story"
     elif event_name == "GEOSTORY_REACTION_ADDED":
         story_author_str: str = event_params["geoStoryAuthorNickname"]
         reaction_str: str = event_params["reaction"]
-        return "Reacted with" + reaction_str + " to a story by " + story_author_str + "."
+        return person_adult.name + " reacted with " + reaction_str + " to a story by " + story_author_str + "."
     elif event_name == "EMOTION_LOGGED_ADULT":
         emotion_str: str = ", ".join(json.loads(event_params['list_of_emotions']))
-        return "Caregiver logged this emotion: " + emotion_str + ". "
+        return person_adult.name + " logged this emotion: " + emotion_str + ". "
     elif event_name == "EMOTION_LOGGED_CHILD":
         emotion_str: str = ", ".join(json.loads(event_params['list_of_emotions']))
-        return "Child logged this emotion: " + emotion_str + ". "
+        return person_child.name + " logged this emotion: " + emotion_str + ". "
     elif event_name == "APP_STARTUP":
         return "Starting the app"
 
