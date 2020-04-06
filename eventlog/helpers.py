@@ -158,7 +158,7 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
 
     if event_name == "READ_STORY":
         story_id: str = event_params['STORY_ID']
-        return "Reading storybook: " + values.stories[story_id] + "."
+        return "Reading a storybook: " + values.stories[story_id] + "."
     elif event_name == "REFLECTION_RESPONDED":
         return "Answering a question"
     elif event_name == "REFLECTION_PLAYBACK_START":
@@ -184,7 +184,7 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
     elif event_name == "GEOSTORY_REACTION_ADDED":
         story_author_str: str = event_params["geoStoryAuthorNickname"]
         reaction_str: str = event_params["reaction"]
-        return person_adult.name + " reacted with " + reaction_str + " to a story by " + story_author_str + "."
+        return person_adult.name + " reacted with \"" + reaction_str + "\" to a story by " + story_author_str + "."
     elif event_name == "EMOTION_LOGGED_ADULT":
         emotion_str: str = ", ".join(json.loads(event_params['list_of_emotions']))
         return person_adult.name + " logged this emotion: " + emotion_str + ". "

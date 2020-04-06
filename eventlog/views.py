@@ -259,7 +259,7 @@ def view_moods(request, user_id: str, start_date_str: str, end_date_str: str):
         'user_id': user_id,
         'start_date': helpers.get_friendly_date_from_str(start_date_str),
         'end_date': helpers.get_friendly_date_from_str(end_date_str),
-        'log_data': daily_logs
+        'log_data': dict(sorted(daily_logs.items(), reverse=True))
     }
 
     return HttpResponse(template.render(context, request))

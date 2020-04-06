@@ -1,7 +1,7 @@
 body {
 	margin: 1em;
 	padding: 0;
-	font-family: "Helvetica", Arial, sans-serif;
+	font-family: "Roboto", "Helvetica", Arial, sans-serif;
 	font-size: 13pt;
 	background: #ffffff;
 }
@@ -73,8 +73,8 @@ hr {
 }
 
 h1 {
-	font-family: "Helvetica", Arial, sans-serif;
-	font-weight: "bold";
+	font-family: "Roboto", "Helvetica", Arial, sans-serif;
+	font-weight: bold;
 	margin: 0 0 0.2em 0;
     color: #38006b;
 }
@@ -83,7 +83,7 @@ h1 {
 	width: 640px;
 	margin: 0 auto;
 	line-height: 1.4em;
-	font-family: "Helvetica", Arial, sans-serif;
+	font-family: "Roboto", "Helvetica", Arial, sans-serif;
 	font-size: 13pt;
 }
 
