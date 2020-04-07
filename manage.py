@@ -5,7 +5,7 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'user_logging_processor.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'storywell_app_admin.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
