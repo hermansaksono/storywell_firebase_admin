@@ -1,13 +1,16 @@
 from datetime import datetime
+
+from django.contrib import messages
 from django.core.handlers.wsgi import WSGIRequest
+from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import loader
 from django.views import View
 
 from admin import nav, constants
+from admin.models import HourMinute
 from family.forms import FamilySettingForm
-from firebase import firebase_utils
 from family import firebase
 
 # Create your views here.
@@ -28,7 +31,6 @@ class FamilyUpdateSetting(View):
             family_setting = firebase.get_family_by_id(family_id)
 
         family_setting_form = FamilySettingForm(initial=family_setting)
-        # meta_form = GeostoryMetaForm(initial=initial["meta"])
         context = {
             'title': "Edit Family: " + family_id,
             'parent_uri': "/family/all",
@@ -42,37 +44,39 @@ class FamilyUpdateSetting(View):
 
     def post(self, request: WSGIRequest, family_id):
         family_setting_form = FamilySettingForm(request.POST)
-        if family_setting_form.is_valid:
-            data = request.POST.copy()
-            appStartDate: datetime = firebase_utils.get_datetime_from_date_str(data.get("appStartDateDjango"))
-            isFitnessSyncOnStart: bool = firebase_utils.get_checkbox_boolean(data.get("isFitnessSyncOnStart"))
-            isFitnessSyncScheduled: bool = firebase_utils.get_checkbox_boolean(data.get("isFitnessSyncScheduled"))
-            isRegularReminderSet: bool = firebase_utils.get_checkbox_boolean(data.get("isRegularReminderSet"))
-            isGroupInfoNeedsRefresh: bool = firebase_utils.get_checkbox_boolean(data.get("isGroupInfoNeedsRefresh"))
-            isStoryListNeedsRefresh: bool = firebase_utils.get_checkbox_boolean(data.get("isStoryListNeedsRefresh"))
-            isFirstRunCompleted: bool = firebase_utils.get_checkbox_boolean(data.get("isFirstRunCompleted"))
-            isDemoMode: bool = firebase_utils.get_checkbox_boolean(data.get("isDemoMode"))
-            isChallengeInfoNeedsRefresh: bool = firebase_utils\
-                .get_checkbox_boolean(data.get("isChallengeInfoNeedsRefresh"))
+        if family_setting_form.is_valid():
+            data = family_setting_form.cleaned_data
+            app_start_date: datetime = datetime.combine(data.get("appStartDateDjango"), datetime.min.time())
+            aware_app_start_date: datetime = timezone.make_aware(app_start_date)
 
-            geostory_ref = firebase.get_family_ref_by_id(family_id)  # Database
-            geostory_ref.update({
-                "appStartDate": datetime.timestamp(appStartDate) * 1000,
-                "isFitnessSyncOnStart": isFitnessSyncOnStart,
-                "isFitnessSyncScheduled": isFitnessSyncScheduled,
-                "isRegularReminderSet": isRegularReminderSet,
-                "isGroupInfoNeedsRefresh": isGroupInfoNeedsRefresh,
-                "isStoryListNeedsRefresh": isStoryListNeedsRefresh,
-                "isChallengeInfoNeedsRefresh": isChallengeInfoNeedsRefresh,
-                "isFirstRunCompleted": isFirstRunCompleted,
-                "isDemoMode": isDemoMode,
+            challenge_end_time : HourMinute = data.get("challengeEndTime")
+            is_fitness_sync_on_start: bool = data.get("isFitnessSyncOnStart")
+            is_fitness_sync_scheduled: bool = data.get("isFitnessSyncScheduled")
+            is_regular_reminder_set: bool = data.get("isRegularReminderSet")
+            is_group_info_needs_refresh: bool = data.get("isGroupInfoNeedsRefresh")
+            is_story_list_needs_refresh: bool = data.get("isStoryListNeedsRefresh")
+            is_first_run_completed: bool = data.get("isFirstRunCompleted")
+            is_demo_mode: bool = data.get("isDemoMode")
+            is_challenge_info_needs_refresh: bool = data.get("isChallengeInfoNeedsRefresh")
+
+            family_ref = firebase.get_family_ref_by_id(family_id)
+            family_ref.update({
+                "appStartDate": datetime.timestamp(aware_app_start_date) * 1000,
+                "challengeEndTime": challenge_end_time.to_json(),
+                "isFitnessSyncOnStart": is_fitness_sync_on_start,
+                "isFitnessSyncScheduled": is_fitness_sync_scheduled,
+                "isRegularReminderSet": is_regular_reminder_set,
+                "isGroupInfoNeedsRefresh": is_group_info_needs_refresh,
+                "isStoryListNeedsRefresh": is_story_list_needs_refresh,
+                "isChallengeInfoNeedsRefresh": is_challenge_info_needs_refresh,
+                "isFirstRunCompleted": is_first_run_completed,
+                "isDemoMode": is_demo_mode,
             })
 
             return redirect('./' + family_id)
         else:
-            pass
-            # messages.error(request, form.errors)
-            # return form with entered data, display messages at the top
+            messages.error(request, family_setting_form.errors)
+            return redirect('./' + family_id)
         pass
 
 

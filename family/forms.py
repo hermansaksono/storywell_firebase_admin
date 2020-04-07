@@ -1,8 +1,10 @@
 from django import forms
 
+from admin import models
 
 class FamilySettingForm(forms.Form):
     appStartDateDjango = forms.DateField(label="App start date (YYYY-MM-DD)", required=True)
+    challengeEndTime = models.HourMinuteField(label="Challenge end time")
     isFitnessSyncOnStart = forms.BooleanField(label="Fitness sync on start", required=False)
     isFitnessSyncScheduled = forms.BooleanField(label="Fitness sync scheduled", required=False)
     isRegularReminderSet = forms.BooleanField(label="Regular reminders scheduled", required=False)

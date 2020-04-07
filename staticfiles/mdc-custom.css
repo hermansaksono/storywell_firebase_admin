@@ -95,8 +95,9 @@ fieldset {
 	float: right;
 }
 
-.mdc-custom-form form label + input[type="text"],
-.mdc-custom-form form label + textarea {
+.mdc-custom-form form input[type="text"],
+.mdc-custom-form form input[type="number"],
+.mdc-custom-form form textarea {
 	font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
 	font-size: 12pt;
 	margin: 8px 0 0 0;
@@ -106,15 +107,10 @@ fieldset {
     padding: 16px 12px;
 }
 
-.mdc-custom-form form label + input[type="text"]:active,
-.mdc-custom-form form label + textarea:active {
-	font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
-	font-size: 12pt;
-	margin: 8px 0 0 0;
-	border: 1px solid #eeeeee;
+.mdc-custom-form form input[type="text"]:active,
+.mdc-custom-form form input[type="number"]:active,
+.mdc-custom-form form textarea:active {
     border-bottom: 2px solid #6200ee;
-	border-radius: 4px 4px 0 0;
-    padding: 16px 12px;
 }
 
 .mdc-custom-form form select {
@@ -126,6 +122,11 @@ fieldset {
     border-bottom: 2px solid #aaaaaa;
 	border-radius: 4px 4px 0 0;
     padding: 4px 24px;
+}
+
+.mdc-custom-form form input[type="number"] + input[type="number"],
+.mdc-custom-form form select + select {
+	margin: 8px 0 0 4px;
 }
 
 .mdc-custom-form .mdc-button {

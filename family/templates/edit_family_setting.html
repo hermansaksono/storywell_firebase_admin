@@ -7,6 +7,13 @@
     {% include "default_header.html" %}
     <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
     <main class="mdc-body">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
         <div class="mdc-custom-form">
             <h2>Caregiver</h2>
             <p>
@@ -23,7 +30,7 @@
 
             <h2>Child</h2>
             <p>
-                <label>Name< and ID</label>
+                <label>Name and ID</label>
                 {{ family_setting.group.members.1.name }}
                 ({{ family_setting.group.members.1.id }})
             </p>
