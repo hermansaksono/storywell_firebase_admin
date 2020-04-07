@@ -9,10 +9,12 @@
     <main class="mdc-body">
         <div class="mdc-custom-form">
             <h2>Caregiver</h2>
-            <p><label>Name</label> {{ family_setting.group.members.0.name }}</p>
-            <p><label>Person id</label>{{ family_setting.group.members.0.id }}</p>
             <p>
-                <label>Last bluetooth sync</label>
+                <label>Name and ID</label>
+                {{ family_setting.group.members.0.name }}
+                ({{ family_setting.group.members.0.id }})
+            <p>
+                <label>Last fitness sync</label>
                 {{ family_setting.caregiverLastSync }}
                 <a href="{{ fitness_sync_uri }}" class="mdc_editor_external_link">
                     <i class="material-icons mdc-button__icon" aria-hidden="true">sync</i>
@@ -20,19 +22,39 @@
             </p>
 
             <h2>Child</h2>
-            <p><label>Name</label> {{ family_setting.group.members.1.name }}</p>
-            <p><label>Person id</label>{{ family_setting.group.members.1.id }}</p>
             <p>
-                <label>Last bluetooth sync</label>
+                <label>Name< and ID</label>
+                {{ family_setting.group.members.1.name }}
+                ({{ family_setting.group.members.1.id }})
+            </p>
+            <p>
+                <label>Last fitness sync</label>
                 {{ family_setting.childLastSync }}
                 <a href="{{ fitness_sync_uri }}" class="mdc_editor_external_link">
                     <i class="material-icons mdc-button__icon" aria-hidden="true">sync</i>
                 </a>
             </p>
 
+
+            <h2>Device Info</h2>
+            <p>
+                <label>Android version</label>
+                {{ family_setting.deviceInfo.androidRelease}} ({{ family_setting.deviceInfo.androidVersion }})
+            </p>
+            <p>
+                <label>Storywell app version</label>
+                {{ family_setting.deviceInfo.appVersionName}} ({{ family_setting.deviceInfo.appVersionCode }})
+            </p>
+            <p>
+                <label>Device name</label>
+                {{ family_setting.deviceInfo.deviceName}} {{ family_setting.deviceInfo.androidVersion }}
+            </p>
             <p>
                 <label>Firebase</label>
-                <a href="{{ family_setting.path }}" target="_blank">Open in Firebase</a>
+                Open in Firebase
+                <a href="{{ family_setting.path }}" target="_blank" class="mdc_editor_external_link">
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">open_in_new</i>
+                </a>
             </p>
 
             <h2>Settings</h2>
