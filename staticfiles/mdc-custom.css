@@ -141,3 +141,20 @@ img.mdc-data-table-icon {
     margin: -12px 0 0 0;
     float: right;
 }
+
+/* MESSAGES BAR */
+.mdc-body .messages {
+	width: 480px;
+    margin: 0 0 8px 0;
+    padding: 12px 16px;
+	border-radius: 4px;
+	background: #666666;
+	color: #ffffff;
+	font-size: 10pt;
+}
+
+.mdc-body .messages li {
+	list-style-type: none;
+    margin: 0;
+    padding: 8px 0;
+}

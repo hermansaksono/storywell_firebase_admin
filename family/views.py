@@ -32,6 +32,7 @@ class FamilyUpdateSetting(View):
         context = {
             'title': "Edit Family: " + family_id,
             'parent_uri': "/family/all",
+            'fitness_sync_uri': "/fitness/sync/" + family_id,
             'family_setting': family_setting,
             'family_setting_form': family_setting_form,
             # 'meta_form': meta_form,

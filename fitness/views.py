@@ -1,8 +1,10 @@
+from django.contrib import messages
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.template import loader
 
 from admin import nav, constants
-from fitness import firebase
+from fitness import firebase, sync
 
 
 # Create your views here.
@@ -31,3 +33,12 @@ def get_family_daily_fitness(request, family_id):
         'data': firebase.get_family_fitness_by_family_id(family_id, 60)
     }
     return HttpResponse(template.render(context, request))
+
+
+def do_request_fitness_sync(request, family_id):
+    if sync.request(family_id):
+        messages.add_message(request, messages.INFO, "Fitness sync request for " + family_id + " is completed.")
+    else:
+        messages.add_message(request, messages.ERROR, "Error when requesting fitness sync for " + family_id + ".")
+
+    return redirect('../daily/' + family_id)
