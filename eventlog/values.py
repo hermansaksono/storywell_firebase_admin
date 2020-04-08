@@ -32,7 +32,8 @@ stories: dict = {
     "31": "Danny the Dragon",
     "32": "The Red Raincoat",
     "33": "Why is Nita Upside Down?",
-    "35": "Small Bird's Big Adventure"
+    "35": "Small Bird's Big Adventure",
+    "36": "Ten Ways to be Active Indoor"
 }
 
 panas: dict = {
