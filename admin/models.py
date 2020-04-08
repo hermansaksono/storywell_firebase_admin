@@ -1,4 +1,4 @@
-from django.forms import MultiValueField, IntegerField
+from django.forms import MultiValueField, IntegerField, Select
 from django.forms.widgets import MultiWidget, NumberInput
 
 # CLASSES
@@ -24,8 +24,8 @@ class InputHourMinuteWidget(MultiWidget):
     def __init__(self, attrs=None):
         # Here we will use two `Select` widgets, one for hour and one for minutes
         widgets = [
-            NumberInput(attrs=attrs),
-            NumberInput(attrs=attrs)
+            Select(attrs=attrs, choices=[(hour, hour) for hour in range(0, 23)]),
+            Select(attrs=attrs, choices=[(minute, minute) for minute in range(0, 59)])
         ]
         super(InputHourMinuteWidget, self).__init__(widgets, attrs)
 
