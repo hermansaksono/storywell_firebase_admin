@@ -131,6 +131,7 @@ fieldset {
 
 .mdc-custom-form .mdc-button {
     float: right;
+	margin-left: 4px;
 }
 
 img.mdc-data-table-icon {

@@ -11,10 +11,16 @@
                         <div class="form-row field-user">
                             {{ date_range_form.as_p }}
                             <br/>
-                            <button class="mdc-button" value="Save">
+
+                            <button class="mdc-button mdc-button--raised" value="Save">
                                 <div class="mdc-button__ripple"></div>
                                 <span class="mdc-button__label">View Logs</span>
                             </button>
+
+                            <a href="{{ action_view_today_log_uri }}" class="mdc-button">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label">View Today's Logs</span>
+                            </a>
                         </div>
                     </fieldset>
                 </form>

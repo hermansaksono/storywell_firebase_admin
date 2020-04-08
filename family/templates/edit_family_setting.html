@@ -14,6 +14,23 @@
         {% endfor %}
         </ul>
         {% endif %}
+        <div class="mdc-tab-bar" role="tablist">
+            <div class="mdc-tab-scroller">
+                <div class="mdc-tab-scroller__scroll-area">
+                    <div class="mdc-tab-scroller__scroll-content">
+                        <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+                        <span class="mdc-tab__content">
+                            <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
+                            <span class="mdc-tab__text-label">Favorites</span>
+                        </span>
+                        <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                        </span>
+                        <span class="mdc-tab__ripple"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
         <div class="mdc-custom-form">
             <h2>Caregiver</h2>
             <p>
@@ -70,7 +87,7 @@
                     <div class="form-row field-user">
                         {{ family_setting_form.as_p }}
                         <br/>
-                        <button class="mdc-button" value="Save">
+                        <button class="mdc-button mdc-button--raised" value="Save">
                             <div class="mdc-button__ripple"></div>
                             <span class="mdc-button__label">Save</span>
                         </button>

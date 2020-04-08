@@ -26,10 +26,12 @@ def get_all_families(request):
 
 class SelectDateRangeForLogView(View):
     def get(self, request, family_id):
+        today_date: str = firebase_utils.get_date_str_from_datetime(datetime.now())
         date_range_form = forms.LogRangeForm()
         context = {
             'title': "Select a Date Range to View Logs for " + family_id,
             'parent_uri': "../all",
+            'action_view_today_log_uri': "../emotions/" + family_id + "/" + today_date + "/" + today_date + "/raw",
             'date_range_form': date_range_form
         }
 
