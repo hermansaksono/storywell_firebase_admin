@@ -1,14 +1,13 @@
 from datetime import datetime, timedelta
 from django import forms
-
+from django.utils import timezone
 
 class LogRangeForm(forms.Form):
-    end_datetime = datetime.now()
-    start_datetime = end_datetime - timedelta(days=30)
+    start_datetime = timezone.now() - timedelta(days=30)
     years_range = range(2018, start_datetime.year + 6)
     start_date = forms.DateField(
         label="Start date", initial=start_datetime, widget=forms.SelectDateWidget(years=years_range))
-    end_date = forms.DateField(label="End date", initial=end_datetime, widget=forms.SelectDateWidget(years=years_range))
+    end_date = forms.DateField(label="End date", initial=timezone.now, widget=forms.SelectDateWidget(years=years_range))
     is_show_raw = forms.BooleanField(label="Show raw logs", initial=False, required=False)
 
     class Meta:
