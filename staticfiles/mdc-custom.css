@@ -1,29 +1,31 @@
 body {
-	margin: 0;
-	padding: 0;
-	font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
-	font-size: 10pt;
-	background: #ffffff;
-	display: flex;
-	height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
+    font-size: 10pt;
+    background: #ffffff;
+    display: flex;
+    height: 100vh;
 }
 
 a, a:visited {
-	color: #0026ca;
-	text-decoration: none;
+    color: #0026ca;
+    text-decoration: none;
 }
 
 fieldset {
-	margin: 0;
-	padding: 0;
-	border: none;
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
 /* CUSTOM MDC-SOURCED THEME */
 .mdc-drawer-app-content {
-  flex: auto;
-  overflow: auto;
-  position: relative;
+    flex: auto;
+    overflow: auto;
+    position: relative;
+    margin-top: 64px;
+    padding-top: 0px !important;
 }
 
 .main-content {
@@ -40,70 +42,69 @@ fieldset {
     z-index: 7 !important;
 }
 
-
 /* CUSTOM THEME */
 .mdc-body {
-	padding: 4px 16px 16px 4px;
+    padding: 4px 16px 16px 4px;
 }
 
 .mdc-custom-form {
-	width: 480px;
+    width: 480px;
 }
 
 .mdc-custom-form p {
-	border-bottom: 1px solid #DDDDDD;
-	padding: 12px;
-	margin: 0;
-	color: #555555;
+    border-bottom: 1px solid #DDDDDD;
+    padding: 12px;
+    margin: 0;
+    color: #555555;
 }
 
 .mdc-custom-form label {
-	clear: both;
-	display: block;
-	width: 95%;
-	color: #000000;
+    clear: both;
+    display: block;
+    width: 95%;
+    color: #000000;
 }
 
 .mdc-custom-form h2 {
-	color: #6200ee;
-	font-size: 1em;
-	padding: 12px 12px 4px 12px;
-	margin: 0;
+    color: #6200ee;
+    font-size: 1em;
+    padding: 12px 12px 4px 12px;
+    margin: 0;
 }
 
 .mdc-custom-form p + h2 {
-	border-top: 1px solid #666666;
+    border-top: 1px solid #666666;
     margin: -1px 0 0 0;
-	padding: 16px 12px 4px 12px;
+    padding: 16px 12px 4px 12px;
 }
 
 .mdc-custom-form form p {
-	overflow: auto;
+    overflow: auto;
 }
 
 .mdc-custom-form form p:hover {
-	background: #E8EAF6;
+    background: #E8EAF6;
 }
 
 .mdc-custom-form form p label {
-	float: left;
+    float: left;
 }
 
 .mdc-custom-form input[type="radio"],
 .mdc-custom-form input[type="checkbox"] {
-	margin: 0;
-	float: right;
+    margin: 0;
+    float: right;
 }
 
 .mdc-custom-form form input[type="text"],
 .mdc-custom-form form input[type="number"],
 .mdc-custom-form form textarea {
-	font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
-	font-size: 12pt;
-	margin: 8px 0 0 0;
-	border: 1px solid #eeeeee;
+    font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
+    font-size: 12pt;
+    margin: 8px 0 0 0;
+    border: 1px solid #eeeeee;
     border-bottom: 2px solid #aaaaaa;
-	border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
     padding: 16px 12px;
 }
 
@@ -115,28 +116,28 @@ fieldset {
 
 .mdc-custom-form form select {
     height: 2.5em;
-	font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
-	font-size: 12pt;
-	margin: 8px 0 0 0;
-	border: 1px solid #eeeeee;
+    font-family: "Roboto", "Helvetica", Verdana, Arial, sans-serif;
+    font-size: 12pt;
+    margin: 8px 0 0 0;
+    border: 1px solid #eeeeee;
     border-bottom: 2px solid #aaaaaa;
-	border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
     padding: 4px 24px;
 }
 
 .mdc-custom-form form input[type="number"] + input[type="number"],
 .mdc-custom-form form select + select {
-	margin: 8px 0 0 4px;
+    margin: 8px 0 0 4px;
 }
 
 .mdc-custom-form .mdc-button {
     float: right;
-	margin-left: 4px;
+    margin-left: 4px;
 }
 
 img.mdc-data-table-icon {
-	width: 16px;
-	height: 16px;
+    width: 16px;
+    height: 16px;
 }
 
 .mdc-custom-form .mdc_editor_external_link {
@@ -146,17 +147,17 @@ img.mdc-data-table-icon {
 
 /* MESSAGES BAR */
 .mdc-body .messages {
-	width: 480px;
+    width: 480px;
     margin: 0 0 8px 0;
     padding: 12px 16px;
-	border-radius: 4px;
-	background: #666666;
-	color: #ffffff;
-	font-size: 10pt;
+    border-radius: 4px;
+    background: #666666;
+    color: #ffffff;
+    font-size: 10pt;
 }
 
 .mdc-body .messages li {
-	list-style-type: none;
+    list-style-type: none;
     margin: 0;
     padding: 8px 0;
 }
