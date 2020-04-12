@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.template import loader
 from pyrebase.pyrebase import PyreResponse
 
-from eventlog import helpers, values
+from eventlog import helpers
 from eventlog.models import Log
 from firebase import firebase_db, firebase_utils
 from group.models import User
@@ -188,86 +188,3 @@ def __refresh_log_by_date(user: User, date_string: str) -> bool:
         user.save()
 
         return True
-
-
-def view_moods(request, user_id: str, start_date_str: str, end_date_str: str, show_data="not_raw"):
-    try:
-        user: User = User.objects.get(user_id=user_id)
-    except User.DoesNotExist:
-        return HttpResponse("User not found")
-
-    db = firebase_db.get()
-
-    is_show_raw = False if show_data is "not_raw" else True
-
-    # Retrieve daily logs in raw
-    raw_daily_logs: Query = db.child("user_logging")\
-        .child(user_id)\
-        .order_by_key()\
-        .start_at(start_date_str)\
-        .end_at(end_date_str)\
-        .get()
-
-    # Retrieve group members' fitness data
-    member_by_role = dict()
-    member_fitness_data = dict()
-
-    for person in user.get_members():
-        member_by_role[person.role] = person
-
-        fitness_data: Query = db.child("person_daily_fitness") \
-            .child(person.person_id).order_by_key() \
-            .start_at(start_date_str) \
-            .end_at(end_date_str)\
-            .get()
-
-        daily_steps = dict()
-        for daily_steps_raw in fitness_data.each():
-            daily_steps[daily_steps_raw.key()] = daily_steps_raw.val()['steps']
-
-        member_fitness_data[person.role] = dict(daily_steps)
-
-    # Initialize the dict that will store the daily logs
-    daily_logs = dict()
-
-    # Pre-processing the daily logs
-    for log in raw_daily_logs.each():
-        date_str: str = log.key()
-        raw_timestamp_logs: dict = log.val()
-        timestamp_logs = list()
-
-        # Retrieve logging data
-        if is_show_raw:
-            logs_to_iterate = list(raw_timestamp_logs.keys())
-        else:
-            logs_to_iterate = helpers.get_filtered_logs(raw_timestamp_logs, values.event_names)
-
-        for timestamp_id in logs_to_iterate:
-            event: dict = raw_timestamp_logs[timestamp_id]
-            time_str: str = helpers.get_friendly_time_from_timestamp(int(timestamp_id))
-            timestamp_logs.append({
-                "timestamp": int(timestamp_id),
-                "event": event['eventName'],
-                "time": time_str,
-                "description": helpers.get_event_info(event, member_by_role),
-                "edit_uri": helpers.get_edit_uri(user, event),
-                "transcript": helpers.get_transcript(event)
-            })
-
-        daily_logs[date_str] = {
-            "date": helpers.get_friendly_date_from_str(date_str),
-            "adult_steps": helpers.get_member_steps_on_day(member_fitness_data, "P", date_str),
-            "child_steps": helpers.get_member_steps_on_day(member_fitness_data, "C", date_str),
-            "minute_logs": timestamp_logs
-        }
-
-    template = loader.get_template('eventlog/view_minute_logs.html')
-    context = {
-        'user_id': user_id,
-        'start_date': helpers.get_friendly_date_from_str(start_date_str),
-        'end_date': helpers.get_friendly_date_from_str(end_date_str),
-        'log_data': dict(sorted(daily_logs.items(), reverse=True)),
-        'is_show_raw': is_show_raw
-    }
-
-    return HttpResponse(template.render(context, request))

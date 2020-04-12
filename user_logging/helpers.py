@@ -4,9 +4,9 @@ from typing import Optional
 
 import pytz as pytz
 
-from eventlog import values
 from firebase import firebase_utils
 from group.models import User, Person
+from . import constants
 
 NOW_STR: str = "NOW"
 ONE_DAY_TIMEDELTA: timedelta = timedelta(days=1)
@@ -33,7 +33,7 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
 
     if event_name == "READ_STORY":
         story_id: str = event_params['STORY_ID']
-        story_name: str = values.stories[story_id] if values.stories[story_id] else event_params['STORY_ID']
+        story_name: str = constants.stories[story_id] if constants.stories[story_id] else event_params['STORY_ID']
         return "Reading a storybook: " + story_name + "."
     elif event_name == "REFLECTION_RESPONDED":
         return "Answering a question"
@@ -52,7 +52,7 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
             return "Family did not complete the fitness challenge."
     elif event_name == "STORY_UNLOCKED":
         story_id: str = event_params['STORY_ID']
-        story_name: str = values.stories[story_id] if values.stories[story_id] else event_params['STORY_ID']
+        story_name: str = constants.stories[story_id] if constants.stories[story_id] else event_params['STORY_ID']
         return "Unlocked a story chapter in: " + story_name + "."
     elif event_name == "GEOSTORY_SUBMITTED":
         return person_adult.name + " shared a community story"
