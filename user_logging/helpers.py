@@ -33,7 +33,7 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
 
     if event_name == "READ_STORY":
         story_id: str = event_params['STORY_ID']
-        story_name: str = constants.stories[story_id] if constants.stories[story_id] else event_params['STORY_ID']
+        story_name: str = constants.stories[story_id] if story_id in constants.stories.keys() else story_id
         return "Reading a storybook: " + story_name + "."
     elif event_name == "REFLECTION_RESPONDED":
         return "Answering a question"
