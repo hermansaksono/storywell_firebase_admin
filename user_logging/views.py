@@ -9,8 +9,9 @@ from django.views import View
 from admin import nav, constants
 from firebase import firebase_utils
 
-from fitness import firebase
-from . import forms
+from group.models import User
+from user_logging import helpers
+from . import forms, firebase
 
 
 def get_all_families(request):
@@ -76,3 +77,25 @@ class RefreshLogView(View):
             # messages.error(request, form.errors)
             # return form with entered data, display messages at the top
         pass
+
+
+class PrintableLogView(View):
+    def get(self, request, user_id: str, start_date_str: str, end_date_str: str, show_data="not_raw"):
+        try:
+            user: User = User.objects.get(user_id=user_id)
+        except User.DoesNotExist:
+            return HttpResponse("User not found")
+
+        is_show_raw: bool = False if show_data is "not_raw" else True
+        logs_by_day: dict = firebase.get_logs_by_day(user, start_date_str, end_date_str, is_show_raw)
+
+        template = loader.get_template('view_minute_logs.html')
+        context = {
+            'user_id': user_id,
+            'start_date': helpers.get_friendly_date_from_str(start_date_str),
+            'end_date': helpers.get_friendly_date_from_str(end_date_str),
+            'log_data': logs_by_day,
+            'is_show_raw': is_show_raw
+        }
+
+        return HttpResponse(template.render(context, request))

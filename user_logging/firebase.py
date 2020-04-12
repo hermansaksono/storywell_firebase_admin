@@ -1,8 +1,11 @@
-from pyrebase.pyrebase import Database
+from pyrebase.pyrebase import Database, PyreResponse
 
 from firebase import firebase_db, firebase_utils
+from group.models import User
+from user_logging import constants, helpers
 
 FIREBASE_USER_SETTING_ROOT = "group_storywell_setting"
+FIREBASE_USER_LOGGING = "user_logging"
 FIREBASE_PERSON_DAILY_FITNESS_ROOT = "person_daily_fitness"
 
 def get_all_families_shallow() -> list:
@@ -72,14 +75,80 @@ def get_family_fitness_data(caregiver_id: int, child_id: int, limit=30) -> dict:
         }
         family_fitness_data[date_str] = one_day_fitness
 
-    # family_fitness_data = OrderedDict()
-    # for key in caregiver_data:
-    #     family_fitness_data[key]["caregiver"] = caregiver_data[key]
-    #
-    # for key in child_data:
-    #     family_fitness_data[key]["child"] = child_data[key]
-
     return family_fitness_data
 
+def get_members_by_role(user: User) -> dict:
+    members_by_role = dict()
+
+    for person in user.get_members():
+        members_by_role[person.role] = person
+
+    return members_by_role
 
 
+def get_raw_logging_data(user_id:str, start_date: str, end_date: str, db: Database) -> PyreResponse:
+    return db.child(FIREBASE_USER_LOGGING) \
+        .child(user_id) \
+        .order_by_key() \
+        .start_at(start_date) \
+        .end_at(end_date) \
+        .get()
+
+
+def get_fitness_data_by_role(user: User, start_date: str, end_date: str, db: Database) -> dict:
+    member_fitness_data = dict()
+
+    for person in user.get_members():
+        daily_steps = dict()
+
+        fitness_data_raw: PyreResponse = db.child(FIREBASE_PERSON_DAILY_FITNESS_ROOT) \
+            .child(person.person_id).order_by_key() \
+            .start_at(start_date) \
+            .end_at(end_date) \
+            .get()
+
+        for daily_steps_raw in fitness_data_raw.each():
+            daily_steps[daily_steps_raw.key()] = daily_steps_raw.val()['steps']
+
+        member_fitness_data[person.role] = dict(daily_steps)
+
+    return member_fitness_data
+
+
+def get_logs_by_day(user: User, start_date: str, end_date: str, is_show_raw: bool) -> dict:
+    db = firebase_db.get()
+    logs_by_day = dict()  # A dict that will store the daily logs
+    raw_log_by_day = get_raw_logging_data(user.user_id, start_date, end_date, db)
+    members_by_role: dict = get_members_by_role(user)
+    members_fitness_data: dict = get_fitness_data_by_role(user, start_date, end_date, db)
+
+    for log in raw_log_by_day.each():
+        date_str: str = log.key()
+        raw_timestamp_logs: dict = log.val()
+        timestamp_logs = list()
+
+        if is_show_raw:
+            logs_to_iterate = list(raw_timestamp_logs.keys())
+        else:
+            logs_to_iterate = helpers.get_filtered_logs(raw_timestamp_logs, constants.event_names)
+
+        for timestamp_id in logs_to_iterate:
+            event: dict = raw_timestamp_logs[timestamp_id]
+            time_str: str = helpers.get_friendly_time_from_timestamp(int(timestamp_id))
+            timestamp_logs.append({
+                "timestamp": int(timestamp_id),
+                "event": event['eventName'],
+                "time": time_str,
+                "description": helpers.get_event_info(event, members_by_role),
+                "edit_uri": helpers.get_edit_uri(user, event),
+                "transcript": helpers.get_transcript(event)
+            })
+
+        logs_by_day[date_str] = {
+            "date": helpers.get_friendly_date_from_str(date_str),
+            "adult_steps": helpers.get_member_steps_on_day(members_fitness_data, "P", date_str),
+            "child_steps": helpers.get_member_steps_on_day(members_fitness_data, "C", date_str),
+            "minute_logs": timestamp_logs
+        }
+
+    return dict(sorted(logs_by_day.items(), reverse=True))

@@ -45,6 +45,8 @@ def get_pretty_time_str(input_datetime: datetime) -> str:
 def get_pretty_datetime_str(input_datetime: datetime) -> str:
     return input_datetime.strftime(PRETTY_DATETIME_STRING_FORMAT)
 
+def get_pretty_date_from_str(date_str: str) -> str:
+    return get_pretty_date_str(get_datetime_from_str(date_str))
 
 def get_checkbox_boolean(is_checked: str):
     if is_checked == 'on':

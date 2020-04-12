@@ -14,6 +14,8 @@ urlpatterns = [
     # path('daily/<str:family_id>', views.get_family_daily_fitness, name="get_family_daily_fitness"),
 
     # ex: /emotions/<user_id>/<start_date_str>/<end_date_str>/
-    path('emotions/<str:user_id>/<str:start_date_str>/<str:end_date_str>', eventlog_views.view_moods, name='view_moods'),
-    path('emotions/<str:user_id>/<str:start_date_str>/<str:end_date_str>/<str:show_data>', eventlog_views.view_moods, name='view_moods'),
+    path('emotions/<str:user_id>/<str:start_date_str>/<str:end_date_str>',
+         views.PrintableLogView.as_view()),
+    path('emotions/<str:user_id>/<str:start_date_str>/<str:end_date_str>/<str:show_data>',
+         views.PrintableLogView.as_view()),
 ]
