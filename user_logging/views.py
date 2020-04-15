@@ -43,12 +43,12 @@ class SelectDateRangeForLogView(View):
         if range_form.is_valid():
             start_date = firebase_utils.get_date_str_from_datetime(range_form.cleaned_data.get("start_date"))
             end_date = firebase_utils.get_date_str_from_datetime(range_form.cleaned_data.get("end_date"))
-            is_show_raw = range_form.cleaned_data.get("")
+            is_show_raw = range_form.cleaned_data.get("is_show_raw")
 
             if is_show_raw:
-                return redirect('../emotions/' + family_id + "/" + start_date + "/" + end_date)
-            else:
                 return redirect('../emotions/' + family_id + "/" + start_date + "/" + end_date + "/raw")
+            else:
+                return redirect('../emotions/' + family_id + "/" + start_date + "/" + end_date)
         else:
             pass
             # messages.error(request, form.errors)
