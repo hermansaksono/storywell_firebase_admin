@@ -30,6 +30,10 @@ def get_family_by_id(family_id: str):
         .get_datetime_from_timestamp(family['fitnessSyncInfo']['caregiverDeviceInfo']['lastSyncTime'])
     family['childLastSync'] = firebase_utils\
         .get_datetime_from_timestamp(family['fitnessSyncInfo']['childDeviceInfo']['lastSyncTime'])
+
+    family['caregiverBleAddress'] = family['fitnessSyncInfo']['caregiverDeviceInfo']['btAddress']
+    family['childBleAddress'] = family['fitnessSyncInfo']['childDeviceInfo']['btAddress']
+
     family['appStartDateDjango'] = datetime.fromtimestamp(family['appStartDate'] / 1000)
 
     return family

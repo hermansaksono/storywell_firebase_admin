@@ -14,15 +14,18 @@ def refresh_groups(request) -> HttpResponse:
     all_users = db.child("group_storywell_setting").get()
 
     for user in all_users.each():
-        app_start_date: datetime = helpers.get_datetime_from_pyre(user, "appStartDate")
-        logging_user = User(
-            user_id=user.key(),
-            app_start_date=app_start_date,
-            last_update=app_start_date
-        )
-        logging_user.save()
+        if User.objects.filter(pk=user.key()).exists() is not True:
+            app_start_date: datetime = helpers.get_datetime_from_pyre(user, "appStartDate")
+            logging_user = User(
+                user_id=user.key(),
+                app_start_date=app_start_date,
+                last_update=app_start_date
+            )
+            logging_user.save()
 
-        if "group" in user.val():
-            helpers.create_persons_in_group(user.val()["group"]["members"], logging_user)
+            if "group" in user.val():
+                helpers.create_persons_in_group(user.val()["group"]["members"], logging_user)
+        else:
+            print("User " + user.key() + " already in the database")
 
     return HttpResponse("Success")

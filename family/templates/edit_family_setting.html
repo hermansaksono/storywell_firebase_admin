@@ -39,12 +39,17 @@
                 <label>Name and ID</label>
                 {{ family_setting.group.members.0.name }}
                 ({{ family_setting.group.members.0.id }})
+            </p>
             <p>
                 <label>Last fitness sync</label>
                 {{ family_setting.caregiverLastSync }}
                 <a href="{{ fitness_sync_uri }}" class="mdc_editor_external_link">
                     <i class="material-icons mdc-button__icon" aria-hidden="true">sync</i>
                 </a>
+            </p>
+            <p>
+                <label>Bluetooth device</label>
+                {{ family_setting.caregiverBleAddress }}
             </p>
 
             <h2>Child</h2>
@@ -59,6 +64,10 @@
                 <a href="{{ fitness_sync_uri }}" class="mdc_editor_external_link">
                     <i class="material-icons mdc-button__icon" aria-hidden="true">sync</i>
                 </a>
+            </p>
+            <p>
+                <label>Bluetooth device</label>
+                {{ family_setting.childBleAddress }}
             </p>
 
 
