@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib import messages
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -30,8 +31,9 @@ class SelectDateRangeForLogView(View):
     def get(self, request, family_id):
         today_date: str = firebase_utils.get_date_str_from_datetime(datetime.now())
         date_range_form = forms.LogRangeForm()
+        date_range_form.set_list_of_families(family_firebase.get_families(), selected=family_id)
         context = {
-            'title': "Select a Date Range to View Logs for " + family_id,
+            'title': "Select a Date Range to View Logs",
             'parent_uri': "../all",
             'action_view_today_log_uri': "../emotions/" + family_id + "/" + today_date + "/" + today_date + "/raw",
             'date_range_form': date_range_form
@@ -41,19 +43,28 @@ class SelectDateRangeForLogView(View):
 
     def post(self, request: WSGIRequest, family_id):
         range_form = forms.LogRangeForm(request.POST)
+        range_form.set_list_of_families(family_firebase.get_families())
+
         if range_form.is_valid():
-            start_date = firebase_utils.get_date_str_from_datetime(range_form.cleaned_data.get("start_date"))
-            end_date = firebase_utils.get_date_str_from_datetime(range_form.cleaned_data.get("end_date"))
-            is_show_raw = range_form.cleaned_data.get("is_show_raw")
+            is_show_today = bool(range_form.data.get("is_show_today"))
+            family = range_form.cleaned_data.get("family")
+
+            if is_show_today:
+                start_date = firebase_utils.get_date_str_from_datetime(datetime.now())
+                end_date = start_date
+                is_show_raw = True
+            else:
+                start_date = firebase_utils.get_date_str_from_datetime(range_form.cleaned_data.get("start_date"))
+                end_date = firebase_utils.get_date_str_from_datetime(range_form.cleaned_data.get("end_date"))
+                is_show_raw = range_form.cleaned_data.get("is_show_raw")
 
             if is_show_raw:
-                return redirect('../emotions/' + family_id + "/" + start_date + "/" + end_date + "/raw")
+                return redirect('../emotions/' + family + "/" + start_date + "/" + end_date + "/raw")
             else:
-                return redirect('../emotions/' + family_id + "/" + start_date + "/" + end_date)
+                return redirect('../emotions/' + family + "/" + start_date + "/" + end_date)
         else:
-            pass
-            # messages.error(request, form.errors)
-            # return form with entered data, display messages at the top
+            messages.error(request, range_form.errors)
+            return redirect("./" + family_id)
         pass
 
 

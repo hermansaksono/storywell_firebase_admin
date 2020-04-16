@@ -5,6 +5,13 @@
     {% include "default_header.html" %}
     <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
         <main class="mdc-body">
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
             <div class="mdc-custom-form">
                 <form method="post">{% csrf_token %}
                     <fieldset class="module aligned ">
@@ -17,10 +24,10 @@
                                 <span class="mdc-button__label">View Logs</span>
                             </button>
 
-                            <a href="{{ action_view_today_log_uri }}" class="mdc-button">
+                            <button class="mdc-button mdc-button" name="is_show_today" value="True">
                                 <div class="mdc-button__ripple"></div>
                                 <span class="mdc-button__label">View Today's Logs</span>
-                            </a>
+                            </button>
                         </div>
                     </fieldset>
                 </form>
