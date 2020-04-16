@@ -5,7 +5,7 @@ from django.template import loader
 
 from admin import nav, constants
 from fitness import firebase, sync
-
+from family import firebase as family_firebase
 
 # Create your views here.
 def get_all_families(request):
@@ -13,7 +13,7 @@ def get_all_families(request):
     context = {
         'title': "Family Fitness",
         'nav': nav.get_nav(active=constants.FITNESS),
-        'all_families': firebase.get_all_families_shallow(),
+        'all_families': family_firebase.get_families(),
     }
     return HttpResponse(template.render(context, request))
 

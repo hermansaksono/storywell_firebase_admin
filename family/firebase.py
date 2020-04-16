@@ -2,13 +2,23 @@ from datetime import datetime
 from pyrebase.pyrebase import Database, PyreResponse
 
 from firebase import firebase_db, firebase_utils
+from group.models import User
 
 FIREBASE_USER_SETTING_ROOT = "group_storywell_setting"
 
-def get_all_families_shallow(order="desc") -> list:
+def get_families(order="desc", only_show_visible=True) -> list:
+    is_reverse: bool = False if order is "desc" else True
+    if only_show_visible:
+        return sorted([str(user.user_id) for user in User.objects.filter(is_visible=True)], reverse=is_reverse)
+    else:
+        return sorted([str(user.user_id) for user in User.objects.all()], reverse=is_reverse)
+
+
+def get_families_firebase_shallow(order="desc") -> list:
     db: Database = firebase_db.get()
     all_families = db.child(FIREBASE_USER_SETTING_ROOT).shallow().get().val()
-    return sorted(all_families)
+    is_reverse: bool = False if order is "desc" else True
+    return sorted(all_families, reverse=is_reverse)
 
 
 def get_family_by_id(family_id: str):

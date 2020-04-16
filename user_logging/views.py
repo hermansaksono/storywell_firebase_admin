@@ -10,6 +10,7 @@ from admin import nav, constants
 from firebase import firebase_utils
 
 from group.models import User
+from family import firebase as family_firebase
 from user_logging import helpers
 from . import forms, firebase
 
@@ -20,7 +21,7 @@ def get_all_families(request):
         'title': "Family Logs",
         'nav': nav.get_nav(active=constants.LOGS),
         'end_date': firebase_utils.get_date_str_from_datetime(datetime.now()),
-        'all_families': firebase.get_all_families_shallow(),
+        'all_families': family_firebase.get_families(),
     }
     return HttpResponse(template.render(context, request))
 

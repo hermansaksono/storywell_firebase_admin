@@ -19,7 +19,7 @@ def get_all_families(request):
     context = {
         'title': "Families",
         'nav': nav.get_nav(active=constants.FAMILY),
-        'all_families': firebase.get_all_families_shallow(),
+        'all_families': firebase.get_families(),
     }
     return HttpResponse(template.render(context, request))
 
