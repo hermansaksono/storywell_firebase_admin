@@ -18,6 +18,13 @@ def get_all_families(request):
     template = loader.get_template('view_all_families.html')
     context = {
         'title': "Families",
+        'actions': [
+            {
+                "uri": "refresh",
+                "title": "Refresh Family List",
+                "mdc_icon": "group_add"
+            },
+        ],
         'nav': nav.get_nav(active=constants.FAMILY),
         'all_families': firebase.get_families(),
     }
@@ -85,3 +92,10 @@ class FamilyUpdateSetting(View):
         # It should return an HttpResponse.
         # form.send_email()
         return super().form_valid(form)
+
+
+def refresh_families(request) -> HttpResponse:
+    num_families = firebase.refresh_groups()
+
+    messages.info(request, "Refreshing the database added " + str(num_families) + " new family(ies).")
+    return redirect('/family/all')
