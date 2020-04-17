@@ -7,11 +7,6 @@ from firebase import firebase_db, firebase_utils
 FIREBASE_USER_SETTING_ROOT = "group_storywell_setting"
 FIREBASE_PERSON_DAILY_FITNESS_ROOT = "person_daily_fitness"
 
-def get_all_families_shallow() -> list:
-    db: Database = firebase_db.get()
-    all_families = db.child(FIREBASE_USER_SETTING_ROOT).shallow().get().val()
-    return sorted(all_families)
-
 
 def get_family_fitness_by_family_id(family_id: str, limit=60):
     family_setting = get_family_ref_by_id(family_id).get().val()
@@ -84,4 +79,31 @@ def get_family_fitness_data(caregiver_id: int, child_id: int, limit=30) -> dict:
     return family_fitness_data
 
 
+def get_caregiver_fitness_averages():
+    db: Database = firebase_db.get()
+    all_families = db.child(FIREBASE_USER_SETTING_ROOT).get()
 
+    caregiver_steps_dict: dict = dict()
+
+    for family_raw in all_families.each():
+        family = family_raw.val()
+        family_name = family_raw.key()
+
+        if "group" in family:
+            caregiver_data: dict = get_person_fitness_data(family["group"]["members"][0]["id"], 100)
+
+            total_steps = 0
+            total_days = 0
+
+            for caregiver_steps in caregiver_data.values():
+                total_steps += caregiver_steps
+                total_days += 1
+
+            if total_days is 0:
+                caregiver_steps_dict[family_name] = 0
+            else:
+                caregiver_steps_dict[family_name] = round(total_steps / total_days)
+
+            # print("Caregiver of " + family_name + ": " + str(caregiver_steps_dict[family_name]) + " steps")
+
+    return caregiver_steps_dict

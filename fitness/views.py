@@ -12,6 +12,13 @@ def get_all_families(request):
     template = loader.get_template('view_all_family_fitness.html')
     context = {
         'title': "Family Fitness",
+        'actions': [
+            {
+                "uri": "averages",
+                "title": "Compute all family caregiver averages",
+                "mdc_icon": "list_alt"
+            },
+        ],
         'nav': nav.get_nav(active=constants.FITNESS),
         'all_families': family_firebase.get_families(),
     }
@@ -23,6 +30,11 @@ def get_family_daily_fitness(request, family_id):
     context = {
         'title': "Family Fitness Data: " + family_id,
         'actions': [
+            {
+                "uri": "../../family/edit/setting/" + family_id,
+                "title": "Family settings",
+                "mdc_icon": "group"
+            },
             {
                 "uri": "../sync/" + family_id,
                 "title": "Sync fitness data",
@@ -42,3 +54,13 @@ def do_request_fitness_sync(request, family_id):
         messages.add_message(request, messages.ERROR, "Error when requesting fitness sync for " + family_id + ".")
 
     return redirect('../daily/' + family_id)
+
+
+def get_caregiver_averages(request):
+    template = loader.get_template('view_family_fitness_averages.html')
+    context = {
+        'title': "Caregivers Fitness Averages",
+        'parent_uri': "/fitness/all",
+        'data': firebase.get_caregiver_fitness_averages()
+    }
+    return HttpResponse(template.render(context, request))
