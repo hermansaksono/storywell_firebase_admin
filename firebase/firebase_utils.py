@@ -5,7 +5,7 @@ import pytz
 
 DATE_STRING_FORMAT: str = "%Y-%m-%d"
 PRETTY_DATE_STRING_FORMAT: str = "%a, %b %d, %Y"
-PRETTY_TIME_STRING_FORMAT: str = "%-I:%-M %p"
+PRETTY_TIME_STRING_FORMAT: str = "%-I:%M %p"
 PRETTY_DATETIME_STRING_FORMAT: str = "%a, %b %d, %Y %-I:%-M %p"
 
 
