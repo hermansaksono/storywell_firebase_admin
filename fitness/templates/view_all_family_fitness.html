@@ -6,6 +6,7 @@
     {% include "default_nav.html" %}
     <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
         <main class="mdc-body">
+            {% include "default_messages.html" %}
             <div class="mdc-data-table">
                 <table class="mdc-data-table__table" aria-label="GeoStories">
                     <thead>
@@ -24,7 +25,13 @@
                             <td class="mdc-data-table__cell">
                                 <a href="daily/{{ family }}" class="mdc-button">
                                     <div class="mdc-button__ripple"></div>
+                                    <i class="material-icons mdc-icon-button__icon">directions_run</i>
                                     View Daily Fitness
+                                </a>
+                                <a href="sync/{{ family }}?redirect={{ request.path }}" class="mdc-button">
+                                    <div class="mdc-button__ripple"></div>
+                                    <i class="material-icons mdc-icon-button__icon">sync</i>
+                                    Sync fitness data
                                 </a>
                             </td>
                         </tr>

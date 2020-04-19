@@ -53,7 +53,10 @@ def do_request_fitness_sync(request, family_id):
     else:
         messages.add_message(request, messages.ERROR, "Error when requesting fitness sync for " + family_id + ".")
 
-    return redirect('../daily/' + family_id)
+    if "redirect" in request.GET:
+        return redirect(request.GET.get("redirect"))
+    else:
+        return redirect('../daily/' + family_id)
 
 
 def get_caregiver_averages(request):

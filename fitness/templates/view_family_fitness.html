@@ -6,13 +6,7 @@
     {% include "default_nav.html" %}
     <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
     <main class="mdc-body">
-        {% if messages %}
-        <ul class="messages">
-        {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-        </ul>
-        {% endif %}
+        {% include "default_messages.html" %}
         <div class="mdc-data-table">
             <table class="mdc-data-table__table" aria-label="GeoStories">
                 <thead>
