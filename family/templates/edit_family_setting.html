@@ -8,13 +8,6 @@
     {% include "default_nav.html" %}
     <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
     <main class="mdc-body">
-        {% if messages %}
-        <ul class="messages">
-        {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-        </ul>
-        {% endif %}
         <!--
         <div class="mdc-tab-bar" role="tablist">
             <div class="mdc-tab-scroller">
@@ -34,6 +27,7 @@
             </div>
         </div>
         -->
+        {% include "default_messages.html" %}
         <div class="mdc-custom-form">
             <h2>Caregiver</h2>
             <p>
@@ -44,7 +38,7 @@
             <p>
                 <label>Last fitness sync</label>
                 {{ family_setting.caregiverLastSync }}
-                <a href="{{ fitness_sync_uri }}" class="mdc_editor_external_link">
+                <a href="{{ fitness_sync_uri }}?redirect={{ request.path }}" class="mdc_editor_external_link">
                     <i class="material-icons mdc-button__icon" aria-hidden="true">sync</i>
                 </a>
             </p>
@@ -62,7 +56,7 @@
             <p>
                 <label>Last fitness sync</label>
                 {{ family_setting.childLastSync }}
-                <a href="{{ fitness_sync_uri }}" class="mdc_editor_external_link">
+                <a href="{{ fitness_sync_uri }}?redirect={{ request.path }}" class="mdc_editor_external_link">
                     <i class="material-icons mdc-button__icon" aria-hidden="true">sync</i>
                 </a>
             </p>
