@@ -145,6 +145,13 @@ img.mdc-data-table-icon {
     float: right;
 }
 
+.mdc-data-table .material-icons {
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin-right: 8px;
+}
+
 /* MESSAGES BAR */
 .mdc-body .messages {
     width: 480px;

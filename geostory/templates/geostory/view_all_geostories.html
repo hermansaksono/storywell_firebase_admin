@@ -33,7 +33,13 @@
                             </a>
                         </td>
                         <td class="mdc-data-table__cell">{{ geostory.datetimeString }}</td>
-                        <td class="mdc-data-table__cell">{{ geostory.meta.neighborhood }}</td>
+                        <td class="mdc-data-table__cell">
+							<a href="https://www.google.com/maps/?q={{ geostory.meta.neighborhood }}+%40{{ geostory.latitude }},{{ geostory.longitude}}"
+							                target="_blank" class="mdc_editor_external_link">
+							    <i class="material-icons mdc-icon-button__icon">location_on</i>
+							    {{ geostory.meta.neighborhood }}
+							</a>
+						</td>
                         <td class="mdc-data-table__cell">
                             {% if geostory.meta.transcript %}Transcribed{% endif %}
                         </td>
