@@ -145,7 +145,7 @@ img.mdc-data-table-icon {
     float: right;
 }
 
-.mdc-data-table .material-icons {
+.mdc-data-table .mdc_editor_external_link .material-icons {
     width: 16px;
     height: 16px;
     float: left;

@@ -8,7 +8,7 @@
     <main class="mdc-body">
         <div class="mdc-custom-form">
             <h2>GeoStory Information</h2>
-            <p><label>Author</label> {{ geostory.username }}</p>
+            <p><label>Author</label> {{ geostory.meta.userNickname }} (username: {{ geostory.username }})</p>
             <p><label>Posted on</label> {{ geostory.datetimeString }}</p>
             <p>
                 <label>Neighborhood</label> {{ geostory.meta.neighborhood }}
