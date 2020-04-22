@@ -14,6 +14,8 @@ def get_family_fitness_by_family_id(family_id: str, limit=60):
     child_id = family_setting["group"]["members"][1]["id"]
 
     output = {
+        "caregiver_person_id": caregiver_id,
+        "child_person_id": child_id,
         "last_sync": {
             "caregiver": firebase_utils.get_datetime_from_timestamp(
                 family_setting['fitnessSyncInfo']['caregiverDeviceInfo']['lastSyncTime']),
