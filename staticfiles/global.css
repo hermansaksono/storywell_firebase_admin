@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap');
+
 body {
 	margin: 1em;
 	padding: 0;
-	font-family: "Roboto", "Helvetica", Arial, sans-serif;
+	font-family: "Lato", "Helvetica", Arial, sans-serif;
 	font-size: 13pt;
 	background: #ffffff;
 }
@@ -73,10 +75,15 @@ hr {
 }
 
 h1 {
-	font-family: "Roboto", "Helvetica", Arial, sans-serif;
-	font-weight: bold;
+	font-family: "Lato", "Helvetica", Arial, sans-serif;
+	font-weight: 900;
 	margin: 0 0 0.2em 0;
     color: #38006b;
+}
+
+h1 + h2 {
+    color: #7b1fa2;
+	margin: 0.5em 0 1em 0;
 }
 
 .content {
@@ -88,11 +95,16 @@ h1 {
 }
 
 h2 {
-    color: #7b1fa2;;
+    color: #7b1fa2;
 }
 
 h3 {
 	color: #0094cc;
+    margin: 1em 0 0.25em 0;
+}
+
+h3 + p {
+    margin: 0.25em 0 1em 0;
 }
 
 p, ul {
@@ -147,4 +159,20 @@ ul, ol {
 
 .mdc-body {
 	margin: 64px 16px 16px 16px;
+}
+
+.logDescription {
+    max-width: 10cm;
+}
+
+.transcript, .quote {
+	margin: 1em 0 1em 1em;
+    display: block;
+}
+
+span.emotion {
+	background: #ffecb3;
+	border-radius: 4px;
+    display:inline-block;
+    padding: 0 4px;
 }

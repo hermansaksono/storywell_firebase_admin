@@ -1,3 +1,5 @@
+GEOSTORIES_PATH: str = "../data/wellness-storytelling-all_geostory.json"
+
 event_names: list = [
     # "APP_STARTUP",
     "READ_STORY",
@@ -6,7 +8,8 @@ event_names: list = [
     "CHALLENGE_PICKED",
     "PLAY_PROGRESS_ANIMATION",
     "STORY_UNLOCKED",
-    "GEOSTORY_VIEWED",
+    # "GEOSTORY_VIEWED",
+    "GEOSTORY_PLAYED",
     "GEOSTORY_SUBMITTED",
     "GEOSTORY_REACTION_ADDED",
     "EMOTION_LOGGED_ADULT",
@@ -23,6 +26,7 @@ stories: dict = {
     "3": "Sydney the Sloth and the Uphill Ride",
     "22": "Leon is Hungry",
     "23": "Getting Started",
+    "24": "Getting Started",
     "25": "Relock Test",
     "26": "Fiona and the Case of Missing Carrots",
     "27": "Frank the Fish is Learning How to Swim",
@@ -34,6 +38,15 @@ stories: dict = {
     "33": "Why is Nita Upside Down?",
     "35": "Small Bird's Big Adventure",
     "36": "Ten Ways to be Active Indoor"
+}
+
+story_contents_json: dict = {
+    "23": "../data/stories/getting_started.json",
+    "24": "../data/stories/getting_started.json",
+    "19": "../data/stories/eli.json",
+    "20": "../data/stories/unicorn.json",
+    "2": "../data/stories/cobby.json",
+    "17": "../data/stories/boomerang.json"
 }
 
 panas: dict = {

@@ -10,27 +10,26 @@
             <table class="mdc-data-table__table" aria-label="GeoStories">
                 <thead>
                     <tr class="mdc-data-table__header-row">
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col"></th>
                         <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Creator</th>
-                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">GeoStory ID</th>
                         <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Date posted</th>
                         <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Neighborhood</th>
-                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col"></th>
-                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col"></th>
-                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col"></th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Firebase</th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Transcribed</th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Action(s)</th>
                     </tr>
                 </thead>
                 <tbody class="mdc-data-table__content">
                     {% if all_geostories %}
                     {% for geostory in all_geostories %}
                     <tr class="mdc-data-table__row">
-                        <td class="mdc-data-table__cell">
-                            <a href="edit/{{ geostory.storyId }}"><b>{{ geostory.username }}</b></a>
+                        <td class="mdc-data-table__cell"">
+                            {% if geostory.isReviewed %}
+                            <i class="material-icons mdc-icon-button__icon">check_circle</i>
+                            {% endif %}
                         </td>
                         <td class="mdc-data-table__cell">
-                            <a href="https://console.firebase.google.com/u/0/project/wellness-storytelling/database/wellness-storytelling/data/~2Fall_geostory~2F/{{ geostory.storyId }}"
-                                target="_blank">
-                                {{ geostory.storyId }}
-                            </a>
+                            <a href="edit/{{ geostory.storyId }}"><b>{{ geostory.username }}</b></a>
                         </td>
                         <td class="mdc-data-table__cell">{{ geostory.datetimeString }}</td>
                         <td class="mdc-data-table__cell">
@@ -41,10 +40,15 @@
 							</a>
 						</td>
                         <td class="mdc-data-table__cell">
-                            {% if geostory.meta.transcript %}Transcribed{% endif %}
+                            <a href="https://console.firebase.google.com/u/0/project/wellness-storytelling/database/wellness-storytelling/data/~2Fall_geostory~2F/{{ geostory.storyId }}"
+                                target="_blank">
+                                {{ geostory.storyId }}
+                            </a>
                         </td>
                         <td class="mdc-data-table__cell">
-                            {% if geostory.isReviewed %}Reviewed{% endif %}
+                            {% if geostory.meta.transcript %}
+                                Transcribed
+                            {% endif %}
                         </td>
                         <td class="mdc-data-table__cell">
                             <a href="edit/{{ geostory.storyId }}" class="mdc-button">

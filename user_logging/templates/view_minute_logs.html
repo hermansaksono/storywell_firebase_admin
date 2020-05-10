@@ -27,10 +27,13 @@
                     <b>{{ min_values.event }}</b>
                 </td>
                 {% endif %}
-                <td>
-                    {{ min_values.description }}
+                <td class="logDescription" style="max-width: 15cm;">
+                    {{ min_values.description|safe }}
                     {% if min_values.transcript %}
-                    <br/>&quot;{{ min_values.transcript }}&quot;
+                    <span class="transcript">&quot;{{ min_values.transcript|safe }}&quot;</span>
+                    {% endif %}
+                    {% if min_values.meta %}
+                    {{ min_values.meta|safe }}
                     {% endif %}
                 </td>
                 {% if min_values.edit_uri %}

@@ -141,7 +141,8 @@ def get_logs_by_day(user: User, start_date: str, end_date: str, is_show_raw: boo
                 "time": time_str,
                 "description": helpers.get_event_info(event, members_by_role),
                 "edit_uri": helpers.get_edit_uri(user, event),
-                "transcript": helpers.get_transcript(event)
+                "transcript": helpers.get_transcript(event),
+                "meta": helpers.get_meta(event)
             })
 
         logs_by_day[date_str] = {
