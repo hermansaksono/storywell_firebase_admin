@@ -26,7 +26,7 @@ stories: dict = {
     "3": "Sydney the Sloth and the Uphill Ride",
     "22": "Leon is Hungry",
     "23": "Getting Started",
-    "24": "Getting Started",
+    "24": "Getting Started (Generic)",
     "25": "Relock Test",
     "26": "Fiona and the Case of Missing Carrots",
     "27": "Frank the Fish is Learning How to Swim",
@@ -46,7 +46,11 @@ story_contents_json: dict = {
     "19": "../data/stories/eli.json",
     "20": "../data/stories/unicorn.json",
     "2": "../data/stories/cobby.json",
-    "17": "../data/stories/boomerang.json"
+    "17": "../data/stories/boomerang.json",
+    "3": "../data/stories/sloth.json",
+    "22": "../data/stories/leon.json",
+    "26": "../data/stories/flamingo.json",
+    "27": "../data/stories/fish.json"
 }
 
 panas: dict = {
