@@ -5,7 +5,7 @@ from django.template import loader
 from django.views import View
 
 from admin import constants, nav
-from firebase import firebase_utils
+from firebase import firebase_utils, config
 from geostory import firebase
 from geostory.forms import GeostoryForm, GeostoryMetaForm
 
@@ -16,6 +16,13 @@ def get_all_geostory(request):
     context = {
         'title': "GeoStories",
         'nav': nav.get_nav(active=constants.GEOSTORIES),
+        'actions': [
+            {
+                "uri": config.FIREBASE_DB_BASE + "/all_geostory",
+                "title": "All Geostories",
+                "mdc_icon": "forum"
+            }
+        ],
         'all_geostories': firebase.get_all_stories(order="desc"),
     }
     return HttpResponse(template.render(context, request))
