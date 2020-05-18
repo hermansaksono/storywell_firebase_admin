@@ -66,7 +66,9 @@ def get_event_info(event: dict, member_by_role: dict) -> str:
         story_name: str = constants.stories[story_id] if constants.stories[story_id] else event_params['STORY_ID']
         return "Unlocked a story chapter in: " + story_name + "."
     elif event_name == "GEOSTORY_SUBMITTED":
-        return person_adult.name + " shared a community story. "
+        prompt: str = get_geostory_prompt(event_params)
+        return person_adult.name + " shared a community story. " \
+                                   "<span class='quote'>Question: <i>" + prompt + "</i></span>"
     # elif event_name == "GEOSTORY_VIEWED":
     elif event_name == "GEOSTORY_PLAYED":
         if event_params['geostory_id'] in all_geostories:
@@ -174,6 +176,22 @@ def get_reflection_question(event_params: dict) -> str:
         return "({0}, {1})".format(story_id, page_id)
     else:
         page: dict = contents[page_id-1]
+        return page['text']
+
+
+def get_geostory_prompt(event_params: dict) -> str:
+    story_id: str = event_params["PROMPT_PARENT_ID"]
+    page_id: int = int(event_params["PROMPT_ID"])
+
+    if story_id not in stories:
+        return "({0})".format(story_id)
+    else:
+        contents: list = stories[story_id]['contents']
+
+    if page_id > len(contents):
+        return "({0}, {1})".format(story_id, page_id)
+    else:
+        page: dict = contents[page_id]
         return page['text']
 
 
