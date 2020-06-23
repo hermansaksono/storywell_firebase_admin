@@ -118,14 +118,18 @@ def get_edit_uri(user: User, event: dict) -> Optional[str]:
     event_timestamp: int = int(event['timestamp'])
     event_params: dict
 
-    if 'eventParams' in event :
+    if 'eventParams' in event:
         event_params = event['eventParams']
 
     if event_name == "REFLECTION_RESPONDED":
+        # user_id: str = user.user_id
+        # story_id: str = event_params["STORY_ID"]
+        # page_id: str = str(event_params["PAGE_ID"])
+        # return "/reflection/edit/{0}/{1}/{2}/{3}".format(user_id, story_id, page_id, event_timestamp)
+
         user_id: str = user.user_id
-        story_id: str = event_params["STORY_ID"]
-        page_id: str = str(event_params["PAGE_ID"])
-        return "/reflection/edit/{0}/{1}/{2}/{3}".format(user_id, story_id, page_id, event_timestamp)
+        date_string: str = firebase_utils.get_date_str_from_timestamp(event_timestamp)
+        return config.URL_EDIT_LOG.format(user_id, date_string, event_timestamp)
     elif event_name == "GEOSTORY_SUBMITTED":
         user_id: str = user.user_id
         date_string: str = firebase_utils.get_date_str_from_timestamp(event_timestamp)
@@ -138,12 +142,14 @@ def get_transcript(event: dict) -> Optional[str]:
     event_name: str = event['eventName']
     event_params: dict
 
-    if 'eventParams' in event :
+    if 'eventParams' in event:
         event_params = event['eventParams']
 
     if event_name == "REFLECTION_RESPONDED":
         if "transcript" in event_params:
             return event_params["transcript"]
+        elif "TRANSCRIPT" in event_params:
+            return event_params["TRANSCRIPT"]
         else:
             return ""
     elif event_name == "GEOSTORY_SUBMITTED":

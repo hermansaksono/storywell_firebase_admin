@@ -18,7 +18,7 @@ def get_all_geostory(request):
         'nav': nav.get_nav(active=constants.GEOSTORIES),
         'actions': [
             {
-                "uri": config.FIREBASE_DB_BASE + "/all_geostory",
+                "uri": config.FIREBASE_DB_BASE + "all_geostory",
                 "title": "All Geostories",
                 "mdc_icon": "forum"
             }
